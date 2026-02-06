@@ -57,7 +57,9 @@
   .hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
   .hero-content h1 { font-family: var(--serif); font-size: 3.5rem; font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 0.6rem; letter-spacing: -0.01em; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
   .hero-tagline { font-family: var(--sans); font-size: 1.15rem; font-weight: 300; color: rgba(255,255,255,0.85); letter-spacing: 0.04em; text-shadow: 0 1px 10px rgba(0,0,0,0.3); }
-  .hero-credit { position: absolute; bottom: -2.5rem; right: 1.5rem; font-size: 0.62rem; color: rgba(255,255,255,0.4); font-weight: 400; letter-spacing: 0.05em; writing-mode: vertical-rl; transform: rotate(180deg); }
+  .hero-credit { position: absolute; bottom: 0; left: 0; right: 0; z-index: 3; background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 1.2rem; pointer-events: none; text-align: right; }
+  .hero-credit p { font-size: 0.7rem; color: rgba(255,255,255,0.6); }
+  .hero-credit strong { color: rgba(255,255,255,0.8); }
 
   .welcome { background: linear-gradient(160deg, #2c4a5a 0%, #3d5a3e 50%, #1a1a1a 100%); padding: 4rem 2.5rem 3.5rem; text-align: center; position: relative; overflow: hidden; }
   .welcome--compact { padding: 2.8rem 2.5rem 2.2rem; }
@@ -182,7 +184,9 @@
   .hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
   .hero-content h1 { font-family: var(--serif); font-size: 3.5rem; font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 0.6rem; letter-spacing: -0.01em; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
   .hero-tagline { font-family: var(--sans); font-size: 1.15rem; font-weight: 300; color: rgba(255,255,255,0.85); letter-spacing: 0.04em; text-shadow: 0 1px 10px rgba(0,0,0,0.3); }
-  .hero-credit { position: absolute; bottom: -2.5rem; right: 1.5rem; font-size: 0.62rem; color: rgba(255,255,255,0.4); font-weight: 400; letter-spacing: 0.05em; writing-mode: vertical-rl; transform: rotate(180deg); }
+  .hero-credit { position: absolute; bottom: 0; left: 0; right: 0; z-index: 3; background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 1.2rem; pointer-events: none; text-align: right; }
+  .hero-credit p { font-size: 0.7rem; color: rgba(255,255,255,0.6); }
+  .hero-credit strong { color: rgba(255,255,255,0.8); }
 
   .hero { height: 40vh; min-height: 250px; } .hero-content h1 { font-size: 2.2rem; } .hero-tagline { font-size: 0.95rem; } .welcome { padding: 2rem 1.2rem; } .welcome--compact { padding: 1.2rem 1.2rem 1.5rem; } .welcome h2 { font-size: 1.7rem; } .welcome .intro { margin-bottom: 1.5rem; }
     .section { padding: 2rem 1.2rem; } .section h2 { font-size: 1.4rem; } .section .desc { margin-bottom: 1.2rem; }
@@ -204,7 +208,9 @@
   .hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
   .hero-content h1 { font-family: var(--serif); font-size: 3.5rem; font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 0.6rem; letter-spacing: -0.01em; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
   .hero-tagline { font-family: var(--sans); font-size: 1.15rem; font-weight: 300; color: rgba(255,255,255,0.85); letter-spacing: 0.04em; text-shadow: 0 1px 10px rgba(0,0,0,0.3); }
-  .hero-credit { position: absolute; bottom: -2.5rem; right: 1.5rem; font-size: 0.62rem; color: rgba(255,255,255,0.4); font-weight: 400; letter-spacing: 0.05em; writing-mode: vertical-rl; transform: rotate(180deg); }
+  .hero-credit { position: absolute; bottom: 0; left: 0; right: 0; z-index: 3; background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 1.2rem; pointer-events: none; text-align: right; }
+  .hero-credit p { font-size: 0.7rem; color: rgba(255,255,255,0.6); }
+  .hero-credit strong { color: rgba(255,255,255,0.8); }
 
   .hero { height: 35vh; min-height: 200px; } .hero-content h1 { font-size: 1.8rem; } .hero-tagline { font-size: 0.85rem; } .hero-content { padding: 1rem; } .welcome { padding: 1.5rem 1rem; } .welcome--compact { padding: 1rem 1rem 1.2rem; } .welcome h2 { font-size: 1.5rem; margin-bottom: 0.5rem; } .welcome .intro { font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.2rem; }
     .welcome .badge { font-size: 0.55rem; padding: 0.35rem 1rem; margin-bottom: 1.2rem; }
@@ -229,8 +235,8 @@
   <div class="hero-content">
     <h1 class="reveal">RPS Landscape Group</h1>
     <p class="hero-tagline reveal reveal-delay-1">Advancing the art of landscape photography</p>
-    <div class="hero-credit">CREDIT: Morag Forbes LRPS</div>
   </div>
+  <div class="hero-credit"><p><strong>CREDIT:</strong> Morag Forbes LRPS</p></div>
 </div>
 
 <div class="welcome welcome--compact">
