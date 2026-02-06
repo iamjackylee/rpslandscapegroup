@@ -8,65 +8,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style>
-  /* ══════════════════════════════════════════════ */
-  /* CSS VARIABLES & RESET                          */
-  /* ══════════════════════════════════════════════ */
   :root {
-    --gold: #d4a843;
-    --gold-dim: rgba(212,168,67,0.4);
-    --dark-teal: #2c4a5a;
-    --forest: #3d5a3e;
-    --ink: #1a1a1a;
-    --text: #4a5568;
-    --cream: #f5f0e8;
-    --cream-border: #e8e0d4;
-    --dark-gold: #b8860b;
-    --white-soft: rgba(255,255,255,0.65);
-    --white-dim: rgba(255,255,255,0.55);
+    --gold: #d4a843; --gold-dim: rgba(212,168,67,0.4);
+    --dark-teal: #2c4a5a; --forest: #3d5a3e;
+    --ink: #1a1a1a; --text: #4a5568;
+    --cream: #f5f0e8; --cream-border: #e8e0d4; --dark-gold: #b8860b;
+    --white-soft: rgba(255,255,255,0.65); --white-dim: rgba(255,255,255,0.55);
     --white-faint: rgba(255,255,255,0.07);
     --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
     --sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body {
-    font-family: var(--sans); line-height: 1.6; color: var(--ink);
-    overflow-x: hidden; background: #faf8f4;
-  }
+  body { font-family: var(--sans); line-height: 1.6; color: var(--ink); overflow-x: hidden; background: #faf8f4; }
   img { max-width: 100%; display: block; }
   a { text-decoration: none; }
 
-  /* ══════════════════════════════════════════════ */
-  /* GRAIN TEXTURE OVERLAY (subtle film look)       */
-  /* ══════════════════════════════════════════════ */
-  body::after {
-    content: '';
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 9999; opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  }
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(44,74,90,0.25); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(44,74,90,0.45); }
+  html { scrollbar-width: thin; scrollbar-color: rgba(44,74,90,0.25) transparent; }
 
-  /* ══════════════════════════════════════════════ */
-  /* SCROLL REVEAL ANIMATIONS                       */
-  /* ══════════════════════════════════════════════ */
-  .reveal {
-    opacity: 0; transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  .reveal.visible {
-    opacity: 1; transform: translateY(0);
-  }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
+  body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); }
 
-  /* Stagger children */
-  .stagger-children > * {
-    opacity: 0; transform: translateY(25px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
+  .stagger-children > * { opacity: 0; transform: translateY(25px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; }
   .stagger-children.visible > *:nth-child(2) { transition-delay: 0.12s; }
   .stagger-children.visible > *:nth-child(3) { transition-delay: 0.19s; }
@@ -76,808 +46,264 @@
   .stagger-children.visible > *:nth-child(7) { transition-delay: 0.47s; }
   .stagger-children.visible > *:nth-child(8) { transition-delay: 0.54s; }
   .stagger-children.visible > *:nth-child(9) { transition-delay: 0.61s; }
-  .stagger-children.visible > * {
-    opacity: 0; transform: translateY(25px);
-  }
-  .stagger-children.visible > * {
-    opacity: 1; transform: translateY(0);
-  }
+  .stagger-children.visible > * { opacity: 1; transform: translateY(0); }
 
-  /* ══════════════════════════════════════════════ */
-  /* SECTION 1: WELCOME / HERO                      */
-  /* ══════════════════════════════════════════════ */
-  .welcome {
-    background: linear-gradient(160deg, #2c4a5a 0%, #3d5a3e 50%, #1a1a1a 100%);
-    padding: 4rem 2.5rem 3.5rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  /* Animated shimmer overlay */
-  .welcome::before {
-    content: '';
-    position: absolute; top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(ellipse at 30% 50%, rgba(212,168,67,0.06) 0%, transparent 60%);
-    animation: shimmer 12s ease-in-out infinite alternate;
-    pointer-events: none;
-  }
-  @keyframes shimmer {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    100% { transform: translate(5%, 3%) rotate(2deg); }
-  }
+  .welcome { background: linear-gradient(160deg, #2c4a5a 0%, #3d5a3e 50%, #1a1a1a 100%); padding: 4rem 2.5rem 3.5rem; text-align: center; position: relative; overflow: hidden; }
+  .welcome::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 30% 50%, rgba(212,168,67,0.06) 0%, transparent 60%); animation: shimmer 12s ease-in-out infinite alternate; pointer-events: none; }
+  @keyframes shimmer { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
   .welcome > * { position: relative; z-index: 1; }
+  .welcome .badge { display: inline-block; font-family: var(--sans); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-dim); padding: 0.45rem 1.4rem; margin-bottom: 1.8rem; transition: all 0.4s ease; }
+  .welcome .badge:hover { background: rgba(212,168,67,0.1); border-color: var(--gold); }
+  .welcome h2 { font-family: var(--serif); font-size: 2.6rem; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 0.8rem; }
+  .welcome .intro { font-size: 0.95rem; font-weight: 300; color: var(--white-soft); max-width: 620px; margin: 0 auto 2rem; line-height: 1.8; }
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; max-width: 720px; margin: 0 auto 2rem; text-align: left; }
+  .feature-card { background: var(--white-faint); border: 1px solid rgba(255,255,255,0.08); padding: 1.4rem 1.3rem; transition: all 0.35s ease; cursor: default; min-height: 120px; display: flex; flex-direction: column; }
+  .feature-card:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.18); transform: translateY(-2px); }
+  .feature-card h3 { font-family: var(--serif); font-weight: 600; color: #fff; font-size: 0.92rem; margin-bottom: 0.35rem; }
+  .feature-card p { font-size: 0.78rem; font-weight: 300; color: var(--white-dim); line-height: 1.6; }
 
-  .welcome .badge {
-    display: inline-block;
-    font-family: var(--sans); font-size: 0.62rem; font-weight: 600;
-    letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--gold); border: 1px solid var(--gold-dim);
-    padding: 0.45rem 1.4rem; margin-bottom: 1.8rem;
-    transition: all 0.4s ease;
-  }
-  .welcome .badge:hover {
-    background: rgba(212,168,67,0.1); border-color: var(--gold);
-  }
-  .welcome h2 {
-    font-family: var(--serif); font-size: 2.6rem; font-weight: 700;
-    color: #fff; line-height: 1.15; margin-bottom: 0.8rem;
-    letter-spacing: -0.01em;
-  }
-  .welcome .intro {
-    font-size: 0.95rem; font-weight: 300; color: var(--white-soft);
-    max-width: 620px; margin: 0 auto 2rem; line-height: 1.8;
-  }
-  .feature-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.9rem;
-    max-width: 720px;
-    margin: 0 auto 2rem;
-    text-align: left;
-  }
-  .feature-card {
-    background: var(--white-faint); border: 1px solid rgba(255,255,255,0.08);
-    padding: 1.4rem 1.3rem; transition: all 0.35s ease; cursor: default;
-    min-height: 120px; display: flex; flex-direction: column; justify-content: flex-start;
-  }
-  .feature-card:hover {
-    background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.18);
-    transform: translateY(-2px);
-  }
-  .feature-card h3 {
-    font-family: var(--serif); font-weight: 600; color: #fff;
-    font-size: 0.92rem; margin-bottom: 0.35rem;
-  }
-  .feature-card p {
-    font-size: 0.78rem; font-weight: 300; color: var(--white-dim); line-height: 1.6;
-  }
-
-  /* Buttons */
-  .btn-gold {
-    display: inline-block; font-family: var(--sans);
-    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--ink); background: var(--gold);
-    padding: 0.95rem 2.4rem; position: relative; overflow: hidden;
-    transition: all 0.35s ease;
-  }
-  .btn-gold::after {
-    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-    transition: left 0.5s ease;
-  }
+  .btn-gold { display: inline-block; font-family: var(--sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); background: var(--gold); padding: 0.95rem 2.4rem; position: relative; overflow: hidden; transition: all 0.35s ease; }
+  .btn-gold::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transition: left 0.5s ease; }
   .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,168,67,0.35); }
   .btn-gold:hover::after { left: 100%; }
-
-  .btn-green {
-    display: inline-block; font-family: var(--sans);
-    font-size: 0.73rem; font-weight: 600; letter-spacing: 0.12em;
-    text-transform: uppercase; color: #fff; background: var(--forest);
-    padding: 0.7rem 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden;
-  }
-  .btn-green::after {
-    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    transition: left 0.5s ease;
-  }
+  .btn-green { display: inline-block; font-family: var(--sans); font-size: 0.73rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; background: var(--forest); padding: 0.7rem 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
+  .btn-green::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); transition: left 0.5s ease; }
   .btn-green:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(61,90,62,0.4); }
   .btn-green:hover::after { left: 100%; }
 
-  /* ══════════════════════════════════════════════ */
-  /* SECTIONS                                       */
-  /* ══════════════════════════════════════════════ */
+  .quick-nav { background: var(--ink); padding: 0.8rem 1rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 0.4rem; position: sticky; top: 0; z-index: 100; transition: box-shadow 0.3s ease; }
+  .quick-nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+  .quick-nav a { color: rgba(255,255,255,0.45); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.35rem 0.8rem; transition: all 0.3s ease; border-bottom: 2px solid transparent; }
+  .quick-nav a:hover, .quick-nav a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
   .section { padding: 3rem 2rem; }
-  .section-label {
-    font-family: var(--sans); font-size: 0.62rem; font-weight: 600;
-    letter-spacing: 0.35em; text-transform: uppercase;
-    color: var(--dark-gold); margin-bottom: 0.6rem;
-  }
-  .section h2 {
-    font-family: var(--serif); font-size: 2rem; font-weight: 700;
-    color: var(--ink); line-height: 1.2; margin-bottom: 0.9rem;
-    letter-spacing: -0.01em;
-  }
-  .section .desc {
-    font-size: 1rem; font-weight: 300; color: var(--text);
-    line-height: 1.75; margin-bottom: 1.8rem;
-  }
+  .section-label { font-family: var(--sans); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--dark-gold); margin-bottom: 0.6rem; }
+  .section h2 { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 0.9rem; }
+  .section .desc { font-size: 1rem; font-weight: 300; color: var(--text); line-height: 1.75; margin-bottom: 1.8rem; }
+  .divider { border: none; margin: 0; height: 1px; position: relative; background: var(--cream-border); overflow: visible; }
+  .divider::after { content: '◆'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #faf8f4; padding: 0 1rem; color: var(--dark-gold); font-size: 0.6rem; }
 
-  /* Animated divider */
-  .divider {
-    border: none; margin: 0; height: 1px; position: relative;
-    background: var(--cream-border); overflow: visible;
-  }
-  .divider::after {
-    content: '◆'; position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    background: #faf8f4; padding: 0 1rem;
-    color: var(--dark-gold); font-size: 0.6rem;
-  }
-
-  /* ══════════════════════════════════════════════ */
-  /* COMPETITION SECTION                             */
-  /* ══════════════════════════════════════════════ */
-  .comp-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 1.2rem; margin-bottom: 1.8rem;
-  }
-  .comp-image {
-    position: relative; overflow: hidden; background: var(--ink);
-    min-height: 0;
-  }
-  .comp-image a {
-    display: block; width: 100%; height: 100%;
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  }
-  .comp-image img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.8s ease;
-  }
-  .comp-image:hover img {
-    transform: scale(1.05); filter: brightness(1.1);
-  }
-  .comp-image .img-overlay {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1;
-    background: rgba(44,74,90,0.0);
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.5s ease; pointer-events: none;
-  }
-  .comp-image .img-overlay span {
-    font-family: var(--sans); font-size: 0.75rem; font-weight: 600;
-    letter-spacing: 0.2em; text-transform: uppercase; color: #fff;
-    opacity: 0; transform: translateY(8px);
-    transition: all 0.4s ease; padding: 0.6rem 1.4rem;
-    border: 1px solid rgba(255,255,255,0.6);
-  }
-  .comp-image:hover .img-overlay {
-    background: rgba(44,74,90,0.35);
-  }
-  .comp-image:hover .img-overlay span {
-    opacity: 1; transform: translateY(0);
-  }
-  .comp-image .credit {
-    position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
-    background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
-    padding: 1.2rem; pointer-events: none;
-  }
-  .comp-image .credit p {
-    font-size: 0.7rem; color: rgba(255,255,255,0.6);
-  }
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.8rem; }
+  .comp-image { position: relative; overflow: hidden; background: var(--ink); min-height: 0; }
+  .comp-image a { display: block; width: 100%; height: 100%; position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+  .comp-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.8s ease; }
+  .comp-image:hover img { transform: scale(1.05); filter: brightness(1.1); }
+  .comp-image .img-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; background: rgba(44,74,90,0); display: flex; align-items: center; justify-content: center; transition: background 0.5s ease; pointer-events: none; }
+  .comp-image .img-overlay span { font-family: var(--sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; opacity: 0; transform: translateY(8px); transition: all 0.4s ease; padding: 0.6rem 1.4rem; border: 1px solid rgba(255,255,255,0.6); }
+  .comp-image:hover .img-overlay { background: rgba(44,74,90,0.35); }
+  .comp-image:hover .img-overlay span { opacity: 1; transform: translateY(0); }
+  .comp-image .credit { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 1.2rem; pointer-events: none; }
+  .comp-image .credit p { font-size: 0.7rem; color: rgba(255,255,255,0.6); }
   .comp-image .credit strong { color: rgba(255,255,255,0.8); }
   .comp-details { display: flex; flex-direction: column; gap: 1rem; }
-  .comp-box {
-    background: var(--cream); padding: 1.6rem; border-left: 3px solid var(--dark-gold);
-    flex: 1; transition: transform 0.3s ease;
-  }
+  .comp-box { background: var(--cream); padding: 1.6rem; border-left: 3px solid var(--dark-gold); flex: 1; transition: transform 0.3s ease; }
   .comp-box:hover { transform: translateX(4px); }
-  .comp-box h3 {
-    font-family: var(--serif); font-weight: 600; color: var(--ink);
-    font-size: 1rem; margin-bottom: 0.6rem;
-  }
+  .comp-box h3 { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 1rem; margin-bottom: 0.6rem; }
   .comp-box p { font-size: 0.85rem; color: var(--text); line-height: 1.65; }
-  .comp-box .check-item {
-    padding: 0.25rem 0 0.25rem 1.5rem; position: relative;
-  }
-  .comp-box .check-item::before {
-    content: '✓'; position: absolute; left: 0; color: var(--forest);
-    font-weight: bold; font-size: 0.9rem;
-  }
-  .text-link {
-    color: var(--dark-teal); font-weight: 600; font-size: 0.85rem;
-    border-bottom: 1px solid transparent; padding-bottom: 2px;
-    transition: all 0.3s ease;
-  }
-  .text-link:hover {
-    border-bottom-color: var(--dark-teal); padding-bottom: 4px;
-  }
+  .comp-box .check-item { padding: 0.25rem 0 0.25rem 1.5rem; position: relative; }
+  .comp-box .check-item::before { content: '✓'; position: absolute; left: 0; color: var(--forest); font-weight: bold; }
+  .text-link { color: var(--dark-teal); font-weight: 600; font-size: 0.85rem; border-bottom: 1px solid transparent; padding-bottom: 2px; transition: all 0.3s ease; }
+  .text-link:hover { border-bottom-color: var(--dark-teal); }
 
-  /* ══════════════════════════════════════════════ */
-  /* EXPLORE CARDS                                   */
-  /* ══════════════════════════════════════════════ */
-  .explore-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-    gap: 1.2rem; margin-bottom: 1rem;
-  }
-  .explore-card {
-    background: var(--cream); border: 1px solid var(--cream-border);
-    overflow: hidden; display: block; position: relative;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  .explore-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .explore-card .card-img {
-    position: relative; height: 210px; overflow: hidden;
-  }
-  .explore-card .card-img img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  .explore-card:hover .card-img img {
-    transform: scale(1.08);
-  }
-  .explore-card .card-img .img-overlay {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(44,74,90,0.0); display: flex;
-    align-items: center; justify-content: center;
-    transition: background 0.4s ease;
-  }
-  .explore-card:hover .card-img .img-overlay {
-    background: rgba(44,74,90,0.25);
-  }
-  .explore-card .card-img .credit {
-    position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
-    background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, transparent 100%);
-    padding: 0.6rem 0.8rem;
-  }
-  .explore-card .card-img .credit p {
-    font-size: 0.62rem; color: rgba(255,255,255,0.6);
-  }
+  .explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.2rem; margin-bottom: 1rem; }
+  .explore-card { background: var(--cream); border: 1px solid var(--cream-border); overflow: hidden; display: block; transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .explore-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+  .explore-card .card-img { position: relative; height: 210px; overflow: hidden; }
+  .explore-card .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .explore-card:hover .card-img img { transform: scale(1.08); }
+  .explore-card .card-img .img-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(44,74,90,0); transition: background 0.4s ease; }
+  .explore-card:hover .card-img .img-overlay { background: rgba(44,74,90,0.25); }
+  .explore-card .card-img .credit { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, transparent 100%); padding: 0.6rem 0.8rem; }
+  .explore-card .card-img .credit p { font-size: 0.62rem; color: rgba(255,255,255,0.6); }
   .explore-card .card-img .credit strong { color: rgba(255,255,255,0.8); }
   .explore-card .card-body { padding: 1.3rem; }
-  .explore-card .card-body h3 {
-    font-family: var(--serif); font-size: 1.1rem; font-weight: 600;
-    color: var(--ink); margin-bottom: 0.35rem;
-    transition: color 0.3s ease;
-  }
+  .explore-card .card-body h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.35rem; transition: color 0.3s ease; }
   .explore-card:hover .card-body h3 { color: var(--dark-teal); }
-  .explore-card .card-body p {
-    font-size: 0.82rem; font-weight: 300; color: var(--text);
-    line-height: 1.6; margin-bottom: 0.6rem;
-  }
-  .explore-card .card-body .cta {
-    color: var(--dark-teal); font-weight: 600; font-size: 0.73rem;
-    letter-spacing: 0.05em;
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    transition: gap 0.3s ease;
-  }
+  .explore-card .card-body p { font-size: 0.82rem; font-weight: 300; color: var(--text); line-height: 1.6; margin-bottom: 0.6rem; }
+  .explore-card .card-body .cta { color: var(--dark-teal); font-weight: 600; font-size: 0.73rem; display: inline-flex; align-items: center; gap: 0.4rem; transition: gap 0.3s ease; }
   .explore-card:hover .card-body .cta { gap: 0.7rem; }
-  .explore-card .card-body .cta .arrow {
-    display: inline-block; transition: transform 0.3s ease;
-  }
+  .explore-card .card-body .cta .arrow { display: inline-block; transition: transform 0.3s ease; }
   .explore-card:hover .card-body .cta .arrow { transform: translateX(3px); }
 
-  /* ══════════════════════════════════════════════ */
-  /* DEFINITION                                      */
-  /* ══════════════════════════════════════════════ */
-  .def-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-    gap: 0.8rem; margin-bottom: 1rem;
-  }
-  .def-card {
-    background: var(--cream); padding: 1.4rem; border-left: 3px solid var(--dark-gold);
-    transition: all 0.3s ease; position: relative; overflow: hidden;
-  }
-  .def-card::after {
-    content: ''; position: absolute; top: 0; right: 0;
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg, transparent 50%, rgba(184,134,11,0.06) 50%);
-    transition: all 0.3s ease;
-  }
+  .def-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 0.8rem; margin-bottom: 1rem; }
+  .def-card { background: var(--cream); padding: 1.4rem; border-left: 3px solid var(--dark-gold); transition: all 0.3s ease; position: relative; overflow: hidden; }
+  .def-card::after { content: ''; position: absolute; top: 0; right: 0; width: 40px; height: 40px; background: linear-gradient(135deg, transparent 50%, rgba(184,134,11,0.06) 50%); transition: all 0.3s ease; }
   .def-card:hover { transform: translateX(4px); }
   .def-card:hover::after { width: 60px; height: 60px; }
-  .def-card h3 {
-    font-family: var(--serif); font-weight: 600; color: var(--ink);
-    font-size: 0.95rem; margin-bottom: 0.3rem;
-  }
+  .def-card h3 { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 0.95rem; margin-bottom: 0.3rem; }
   .def-card p { font-size: 0.82rem; font-weight: 300; color: var(--text); line-height: 1.6; }
 
-  /* ══════════════════════════════════════════════ */
-  /* SOCIAL                                          */
-  /* ══════════════════════════════════════════════ */
-  .social {
-    background: linear-gradient(160deg, #2c4a5a 0%, #3d5a3e 100%);
-    padding: 3rem 2rem; text-align: center; position: relative; overflow: hidden;
-  }
-  .social::before {
-    content: '';
-    position: absolute; top: -50%; right: -30%;
-    width: 80%; height: 200%;
-    background: radial-gradient(ellipse, rgba(212,168,67,0.04) 0%, transparent 70%);
-    animation: shimmer 15s ease-in-out infinite alternate;
-    pointer-events: none;
-  }
+  .social { background: linear-gradient(160deg, #2c4a5a 0%, #3d5a3e 100%); padding: 3rem 2rem; text-align: center; position: relative; overflow: hidden; }
+  .social::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(212,168,67,0.04) 0%, transparent 70%); animation: shimmer 15s ease-in-out infinite alternate; pointer-events: none; }
   .social > * { position: relative; z-index: 1; }
   .social .section-label { color: var(--gold); }
-  .social h2 {
-    font-family: var(--serif); font-size: 2rem; font-weight: 700;
-    color: #fff; line-height: 1.2; margin-bottom: 0.9rem;
-  }
-  .social .desc {
-    font-size: 0.95rem; font-weight: 300; color: var(--white-soft);
-    max-width: 520px; margin: 0 auto 1.8rem; line-height: 1.75;
-  }
-  .social-grid {
-    display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 1rem; max-width: 560px; margin: 0 auto 2rem;
-  }
-  .social-card {
-    display: block; background: var(--white-faint);
-    border: 1px solid rgba(255,255,255,0.1); padding: 1.4rem 0.8rem;
-    text-align: center; transition: all 0.35s ease;
-  }
-  .social-card:hover {
-    background: rgba(255,255,255,0.14);
-    border-color: rgba(255,255,255,0.22);
-    transform: translateY(-3px);
-  }
-  .social-card h3 {
-    font-family: var(--serif); font-weight: 600; color: #fff;
-    font-size: 0.92rem; margin-bottom: 0.3rem;
-  }
+  .social h2 { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 0.9rem; }
+  .social .desc { font-size: 0.95rem; font-weight: 300; color: var(--white-soft); max-width: 520px; margin: 0 auto 1.8rem; line-height: 1.75; }
+  .social-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; max-width: 560px; margin: 0 auto 2rem; }
+  .social-card { display: block; background: var(--white-faint); border: 1px solid rgba(255,255,255,0.1); padding: 1.4rem 0.8rem; text-align: center; transition: all 0.35s ease; }
+  .social-card:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.22); transform: translateY(-3px); }
+  .social-card h3 { font-family: var(--serif); font-weight: 600; color: #fff; font-size: 0.92rem; margin-bottom: 0.3rem; }
   .social-card p { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
 
-  /* ══════════════════════════════════════════════ */
-  /* FOOTER                                          */
-  /* ══════════════════════════════════════════════ */
-  .footer-cta {
-    background: var(--ink); padding: 3.5rem 2rem; text-align: center;
-    position: relative;
-  }
-  .footer-cta::before {
-    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-    width: 60px; height: 3px; background: var(--gold);
-  }
-  .footer-cta h2 {
-    font-family: var(--serif); font-size: 2rem; font-weight: 700;
-    color: #fff; margin-bottom: 0.7rem;
-  }
-  .footer-cta p {
-    font-size: 0.95rem; font-weight: 300; color: rgba(255,255,255,0.4);
-    max-width: 500px; margin: 0 auto 1.8rem; line-height: 1.75;
-  }
+  .footer-cta { background: var(--ink); padding: 3.5rem 2rem; text-align: center; position: relative; }
+  .footer-cta::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--gold); }
+  .footer-cta h2 { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.7rem; }
+  .footer-cta p { font-size: 0.95rem; font-weight: 300; color: rgba(255,255,255,0.4); max-width: 500px; margin: 0 auto 1.8rem; line-height: 1.75; }
 
-  /* ══════════════════════════════════════════════ */
-  /* OVATION — FIXED HEIGHT FOR NESTED IFRAME       */
-  /* ══════════════════════════════════════════════ */
-  .ovation-embed {
-    width: 100%; max-width: 1200px; margin: 0 auto 1.5rem;
-    height: 750px;
-    border: 1px solid var(--cream-border);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    transition: box-shadow 0.4s ease;
-  }
-  .ovation-embed:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-  }
-  .ovation-embed iframe {
-    width: 100%; height: 100%; border: none; display: block;
-  }
+  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; width: 44px; height: 44px; border: none; cursor: pointer; background: var(--dark-teal); color: #fff; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(20px); transition: all 0.4s ease; pointer-events: none; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+  .back-to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover { background: var(--forest); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
 
-  /* ══════════════════════════════════════════════ */
-  /* RESPONSIVE                                      */
-  /* ══════════════════════════════════════════════ */
+  .ovation-embed { width: 100%; max-width: 1200px; margin: 0 auto 1.5rem; height: 750px; border: 1px solid var(--cream-border); box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: box-shadow 0.4s ease; }
+  .ovation-embed:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+  .ovation-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+
   @media (max-width: 700px) {
-    .comp-grid { grid-template-columns: 1fr; }
-    .comp-image { min-height: 240px; position: relative; }
-    .comp-image a { position: absolute; }
+    .comp-grid { grid-template-columns: 1fr; } .comp-image { min-height: 240px; position: relative; } .comp-image a { position: absolute; }
     .social-grid { grid-template-columns: 1fr; max-width: 280px; }
-    .welcome { padding: 2rem 1.2rem; }
-    .welcome h2 { font-size: 1.7rem; }
-    .welcome .intro { margin-bottom: 1.5rem; }
-    .section { padding: 2rem 1.2rem; }
-    .section h2 { font-size: 1.4rem; }
-    .section .desc { margin-bottom: 1.2rem; }
-    .feature-grid { grid-template-columns: 1fr; gap: 0.5rem; }
-    .feature-card { padding: 1rem; min-height: auto; }
+    .welcome { padding: 2rem 1.2rem; } .welcome h2 { font-size: 1.7rem; } .welcome .intro { margin-bottom: 1.5rem; }
+    .section { padding: 2rem 1.2rem; } .section h2 { font-size: 1.4rem; } .section .desc { margin-bottom: 1.2rem; }
+    .quick-nav a { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
+    .feature-grid { grid-template-columns: 1fr; gap: 0.5rem; } .feature-card { padding: 1rem; min-height: auto; }
     .ovation-embed { height: 450px; }
-    .explore-grid { gap: 0.8rem; }
-    .explore-card .card-img { height: 160px; }
-    .explore-card .card-body { padding: 1rem; }
-    .explore-card .card-body p { margin-bottom: 0.4rem; }
-    .def-grid { gap: 0.5rem; }
-    .def-card { padding: 1rem; }
-    .social { padding: 2rem 1.2rem; }
-    .social-grid { gap: 0.6rem; margin-bottom: 1.5rem; }
-    .social-card { padding: 1rem 0.6rem; }
-    .footer-cta { padding: 2.5rem 1.2rem; }
-    .divider::after { display: none; }
+    .explore-grid { gap: 0.8rem; } .explore-card .card-img { height: 160px; } .explore-card .card-body { padding: 1rem; }
+    .def-grid { gap: 0.5rem; } .def-card { padding: 1rem; }
+    .social { padding: 2rem 1.2rem; } .social-grid { gap: 0.6rem; margin-bottom: 1.5rem; } .social-card { padding: 1rem 0.6rem; }
+    .footer-cta { padding: 2.5rem 1.2rem; } .divider::after { display: none; }
   }
-
   @media (max-width: 420px) {
-    .welcome { padding: 1.5rem 1rem; }
-    .welcome h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-    .welcome .intro { font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.2rem; }
+    .welcome { padding: 1.5rem 1rem; } .welcome h2 { font-size: 1.5rem; margin-bottom: 0.5rem; } .welcome .intro { font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.2rem; }
     .welcome .badge { font-size: 0.55rem; padding: 0.35rem 1rem; margin-bottom: 1.2rem; }
-    .section { padding: 1.5rem 1rem; }
-    .section h2 { font-size: 1.25rem; }
-    .section .desc { font-size: 0.9rem; }
-    .feature-card h3 { font-size: 0.85rem; }
-    .feature-card p { font-size: 0.75rem; }
-    .comp-image { min-height: 200px; }
-    .comp-box { padding: 1.2rem; }
-    .comp-box h3 { font-size: 0.9rem; }
-    .comp-box p { font-size: 0.8rem; }
+    .section { padding: 1.5rem 1rem; } .section h2 { font-size: 1.25rem; } .section .desc { font-size: 0.9rem; }
+    .feature-card h3 { font-size: 0.85rem; } .feature-card p { font-size: 0.75rem; }
+    .comp-image { min-height: 200px; } .comp-box { padding: 1.2rem; } .comp-box h3 { font-size: 0.9rem; } .comp-box p { font-size: 0.8rem; }
     .ovation-embed { height: 380px; }
-    .explore-card .card-img { height: 140px; }
-    .explore-card .card-body h3 { font-size: 1rem; }
-    .explore-card .card-body p { font-size: 0.78rem; }
-    .btn-gold { padding: 0.75rem 1.8rem; font-size: 0.72rem; }
-    .btn-green { padding: 0.6rem 1.2rem; font-size: 0.68rem; }
-    .footer-cta { padding: 2rem 1rem; }
-    .footer-cta h2 { font-size: 1.5rem; }
-    .footer-cta p { font-size: 0.85rem; }
+    .explore-card .card-img { height: 140px; } .explore-card .card-body h3 { font-size: 1rem; } .explore-card .card-body p { font-size: 0.78rem; }
+    .btn-gold { padding: 0.75rem 1.8rem; font-size: 0.72rem; } .btn-green { padding: 0.6rem 1.2rem; font-size: 0.68rem; }
+    .footer-cta { padding: 2rem 1rem; } .footer-cta h2 { font-size: 1.5rem; } .footer-cta p { font-size: 0.85rem; }
+    .back-to-top { bottom: 1rem; right: 1rem; width: 38px; height: 38px; font-size: 0.95rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- SECTION 1 — WELCOME / ABOUT                        -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div class="welcome">
   <div class="badge reveal">Royal Photographic Society · Landscape Group</div>
   <h2 class="reveal reveal-delay-1">Welcome to the Landscape Group</h2>
   <p class="intro reveal reveal-delay-2">A friendly community dedicated to encouraging landscape photography and helping photographers develop their skills — from those just starting out to experienced practitioners.</p>
-
   <div class="feature-grid stagger-children">
-    <div class="feature-card">
-      <h3>🏔️ Broad Perspective</h3>
-      <p>From wild places to built environments — classic and contemporary approaches are equally celebrated.</p>
-    </div>
-    <div class="feature-card">
-      <h3>📸 Creative Techniques</h3>
-      <p>Long exposures, multiple exposures, intentional camera movement, abstraction, minimalism and more.</p>
-    </div>
-    <div class="feature-card">
-      <h3>🤝 Community</h3>
-      <p>Professional workshops, member-led field trips, competitions, and Print, Critique, Processing &amp; Project circles.</p>
-    </div>
-    <div class="feature-card">
-      <h3>📰 Stay Connected</h3>
-      <p>Regular eNewsletters, the Landscape Group Magazine (every eight months), and our new <em>Ovation</em> e-Zine.</p>
-    </div>
+    <div class="feature-card"><h3>🏔️ Broad Perspective</h3><p>From wild places to built environments — classic and contemporary approaches are equally celebrated.</p></div>
+    <div class="feature-card"><h3>📸 Creative Techniques</h3><p>Long exposures, multiple exposures, intentional camera movement, abstraction, minimalism and more.</p></div>
+    <div class="feature-card"><h3>🤝 Community</h3><p>Professional workshops, member-led field trips, competitions, and Print, Critique, Processing &amp; Project circles.</p></div>
+    <div class="feature-card"><h3>📰 Stay Connected</h3><p>Regular eNewsletters, the Landscape Group Magazine (every eight months), and our new <em>Ovation</em> e-Zine.</p></div>
   </div>
-
-  <div class="reveal reveal-delay-3">
-    <a class="btn-gold" href="https://rps.org/membership/" target="_top">JOIN THE GROUP →</a>
-  </div>
+  <div class="reveal reveal-delay-3"><a class="btn-gold" href="https://rps.org/membership/" target="_top">JOIN THE GROUP →</a></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- SECTION 2 — THEMED COMPETITION                      -->
-<!-- ═══════════════════════════════════════════════════ -->
+<nav class="quick-nav" id="quickNav">
+  <a href="#lg-competition">Competition</a><a href="#lg-ovation">Ovation</a><a href="#lg-explore">Explore</a><a href="#lg-definition">Definition</a><a href="#lg-social">Social</a>
+</nav>
+
 <div id="lg-competition" class="section">
   <p class="section-label reveal">CURRENT COMPETITION</p>
   <h2 class="reveal reveal-delay-1">Themed Competition: Low Light</h2>
-  <p class="desc reveal reveal-delay-2">There's a particular kind of magic when the light begins to fade. Colours soften, shadows lengthen, and the landscape slips into a quieter register — dusk and dawn, mist and moonlight, lamplit streets, and star-sprinkled skies.</p>
-
+  <p class="desc reveal reveal-delay-2">There’s a particular kind of magic when the light begins to fade. Colours soften, shadows lengthen, and the landscape slips into a quieter register — dusk and dawn, mist and moonlight, lamplit streets, and star-sprinkled skies.</p>
   <div class="comp-grid reveal reveal-delay-2">
     <div class="comp-image">
-      <a href="https://pollunit.com/polls/rps_landscape_group_low_light_theme" target="_blank" rel="noopener">
-        <img src="https://rps.org/media/s3rhw3ll/low-light-jacky-lee.jpg?mode=max&amp;width=760" alt="Scarlet Wing Under Starlight by Jacky Lee" />
-      </a>
+      <a href="https://pollunit.com/polls/rps_landscape_group_low_light_theme" target="_blank" rel="noopener"><img src="https://rps.org/media/s3rhw3ll/low-light-jacky-lee.jpg?mode=max&amp;width=760" alt="Scarlet Wing Under Starlight by Jacky Lee" /></a>
       <div class="img-overlay"><span>VIEW ENTRIES</span></div>
-      <div class="credit">
-        <p><strong>CREDIT:</strong> Jacky Lee</p>
-      </div>
+      <div class="credit"><p><strong>CREDIT:</strong> Jacky Lee</p></div>
     </div>
-
     <div class="comp-details">
-      <div class="comp-box">
-        <h3>What We're Looking For</h3>
-        <p>Silhouettes, reflections, gentle pools of illumination, and the calm drama that emerges when the world is lit only sparingly. Whether you're working with a tripod and long exposures, embracing grain and mood, or simply responding to what the night gives you.</p>
-      </div>
-      <div class="comp-box">
-        <h3>Key Dates</h3>
-        <p class="check-item"><strong>Theme period:</strong> 1 January – 28 March 2026</p>
-        <p class="check-item"><strong>Voting:</strong> 21 – 28 March 2026</p>
-        <p style="margin-top: 1rem;"><a class="btn-green" href="https://pollunit.com/polls/rps_landscape_group_low_light_theme" target="_blank" rel="noopener">ENTER &amp; VIEW SUBMISSIONS →</a></p>
-      </div>
+      <div class="comp-box"><h3>What We’re Looking For</h3><p>Silhouettes, reflections, gentle pools of illumination, and the calm drama that emerges when the world is lit only sparingly. Whether you’re working with a tripod and long exposures, embracing grain and mood, or simply responding to what the night gives you.</p></div>
+      <div class="comp-box"><h3>Key Dates</h3><p class="check-item"><strong>Theme period:</strong> 1 January – 28 March 2026</p><p class="check-item"><strong>Voting:</strong> 21 – 28 March 2026</p><p style="margin-top: 1rem;"><a class="btn-green" href="https://pollunit.com/polls/rps_landscape_group_low_light_theme" target="_blank" rel="noopener">ENTER &amp; VIEW SUBMISSIONS →</a></p></div>
     </div>
   </div>
-
   <a class="text-link reveal" href="https://rps.org/groups/landscape/competitions/themed-landscape-competition/" target="_top">View all themed competitions →</a>
 </div>
-
 <hr class="divider" />
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- SECTION 3 — OVATION e-ZINE                         -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div id="lg-ovation" class="section">
   <p class="section-label reveal">NEW PUBLICATION</p>
   <h2 class="reveal reveal-delay-1">Ovation — Our New e-Zine</h2>
-  <p class="desc reveal reveal-delay-2"><em>Ovation</em> celebrates members' successes and progress on their Distinctions journey. Each edition is designed to inspire, encourage and showcase the breadth of landscape work being made across the Group.</p>
-
-  <div class="ovation-embed reveal reveal-delay-2">
-    <iframe src="https://e.issuu.com/embed.html?u=royalphotographicsociety&amp;d=landscape_sig_ovation_1" title="Ovation Issue 1" loading="lazy" allowfullscreen="true"></iframe>
-  </div>
+  <p class="desc reveal reveal-delay-2"><em>Ovation</em> celebrates members’ successes and progress on their Distinctions journey. Each edition is designed to inspire, encourage and showcase the breadth of landscape work being made across the Group.</p>
+  <div class="ovation-embed reveal reveal-delay-2"><iframe src="https://e.issuu.com/embed.html?u=royalphotographicsociety&amp;d=landscape_sig_ovation_1" title="Ovation Issue 1" loading="lazy" allowfullscreen="true"></iframe></div>
 </div>
-
 <hr class="divider" />
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- SECTION 4 — EXPLORE THE GROUP                       -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div id="lg-explore" class="section">
   <p class="section-label reveal">EXPLORE THE GROUP</p>
   <h2 class="reveal reveal-delay-1">Discover What We Offer</h2>
-  <p class="desc reveal reveal-delay-2">From workshops and competitions to publications and community projects — there's something for every landscape photographer.</p>
-
+  <p class="desc reveal reveal-delay-2">From workshops and competitions to publications and community projects — there’s something for every landscape photographer.</p>
   <div class="explore-grid stagger-children">
-
-    <a class="explore-card" href="https://rps.org/groups/landscape/what-we-do/" target="_top">
-      <div class="card-img">
-        <img src="https://rps.org/media/1f4nz4jb/3841843-atul-kshirsagar-buttermere-sunset.jpg?mode=max&amp;width=760" alt="Buttermere Sunset by Atul Kshirsagar" />
-        <div class="img-overlay"></div>
-        <div class="credit"><p><strong>CREDIT:</strong> Atul Kshirsagar</p></div>
-      </div>
-      <div class="card-body">
-        <h3>What We Do</h3>
-        <p>An overview of our activities, circles, and how to get involved with the group.</p>
-        <span class="cta">Explore <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="explore-card" href="https://rps.org/groups/landscape/events/" target="_top">
-      <div class="card-img">
-        <img src="https://rps.org/media/dxomtlqw/2nd-place-misty-drove-road-by-ian-iles.jpg?mode=max&amp;width=760" alt="Misty Drove Road by Ian Iles" />
-        <div class="img-overlay"></div>
-        <div class="credit"><p><strong>CREDIT:</strong> Ian Iles</p></div>
-      </div>
-      <div class="card-body">
-        <h3>Events</h3>
-        <p>Workshops, field trips, conferences, and online talks throughout the year.</p>
-        <span class="cta">View events <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="explore-card" href="https://rps.org/groups/landscape/projects/" target="_top">
-      <div class="card-img">
-        <img src="https://rps.org/media/eembfi2i/4206323-colin-balfour-lrps-11-hebrides-durness-to-mallaig-eilean-glas-lighthouse.jpg?mode=max&amp;width=760" alt="Eilean Glas Lighthouse by Colin Balfour LRPS" />
-        <div class="img-overlay"></div>
-        <div class="credit"><p><strong>CREDIT:</strong> Colin Balfour LRPS</p></div>
-      </div>
-      <div class="card-body">
-        <h3>Projects</h3>
-        <p>Collaborative and individual projects our members are working on.</p>
-        <span class="cta">See projects <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="explore-card" href="https://rps.org/groups/landscape/articles/" target="_top">
-      <div class="card-img">
-        <img src="https://rps.org/media/ozidy5ri/burnham-on-sea-1-edit-2-lindsay-southgate.jpg?mode=max&amp;width=760" alt="Burnham-on-Sea by Lindsay Southgate" />
-        <div class="img-overlay"></div>
-        <div class="credit"><p><strong>CREDIT:</strong> Lindsay Southgate</p></div>
-      </div>
-      <div class="card-body">
-        <h3>Articles</h3>
-        <p>Members' writing on technique, inspiration, locations, and the landscape craft.</p>
-        <span class="cta">Read articles <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="explore-card" href="https://rps.org/groups/landscape/competitions/" target="_top">
-      <div class="card-img">
-        <img src="https://rps.org/media/4xrnqoca/5107169-mike-lloyd-spittal-beach.jpg?mode=max&amp;width=760" alt="Spittal Beach by Mike Lloyd ARPS" />
-        <div class="img-overlay"></div>
-        <div class="credit"><p><strong>CREDIT:</strong> Mike Lloyd ARPS</p></div>
-      </div>
-      <div class="card-body">
-        <h3>Competitions</h3>
-        <p>Themed and open competitions — a great way to challenge yourself and share your work.</p>
-        <span class="cta">Enter now <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="explore-card" href="https://rps.org/groups/landscape/publications/" target="_top">
-      <div class="card-img">
-        <img src="https://rps.org/media/d5hdenrx/3767537-mark-cresswell-arps-purple-mist.jpg?mode=max&amp;width=760" alt="Purple Mist by Mark Cresswell ARPS" />
-        <div class="img-overlay"></div>
-        <div class="credit"><p><strong>CREDIT:</strong> Mark Cresswell ARPS</p></div>
-      </div>
-      <div class="card-body">
-        <h3>Publications</h3>
-        <p>Newsletters, the Landscape Group Magazine, and other group documents.</p>
-        <span class="cta">Browse publications <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="explore-card" href="https://rps.org/groups/landscape/rps-landscape-distinction/" target="_top">
-      <div class="card-img">
-        <img src="https://rps.org/media/5htfeair/3806634-thomas-andy-branson-autumn-is-here.jpg?mode=max&amp;width=760" alt="Autumn Is Here by Thomas Andy Branson" />
-        <div class="img-overlay"></div>
-        <div class="credit"><p><strong>CREDIT:</strong> Thomas Andy Branson</p></div>
-      </div>
-      <div class="card-body">
-        <h3>Landscape Distinctions</h3>
-        <p>Support and guidance for your LRPS, ARPS, or FRPS journey in landscape.</p>
-        <span class="cta">Learn more <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="explore-card" href="https://rps.org/groups/landscape/our-committee/" target="_top">
-      <div class="card-img">
-        <img src="https://rps.org/media/0hbdep5i/3813543-elizabeth-webb-gushing-water-sgwd-y-pannwr-waterfall.jpg?mode=max&amp;width=760" alt="Gushing Water, Sgwd y Pannwr Waterfall by Elizabeth Webb" />
-        <div class="img-overlay"></div>
-        <div class="credit"><p><strong>CREDIT:</strong> Elizabeth Webb</p></div>
-      </div>
-      <div class="card-body">
-        <h3>Our Committee</h3>
-        <p>Meet the volunteers who run the Landscape Group and keep things moving.</p>
-        <span class="cta">Meet the team <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="explore-card" href="https://rps.org/groups/landscape/climate-change/" target="_top">
-      <div class="card-img">
-        <img src="https://rps.org/media/grop4n4o/3781170-dave-lynch-three-in-a-row.jpg?mode=max&amp;width=760" alt="Three In A Row by Dave Lynch" />
-        <div class="img-overlay"></div>
-        <div class="credit"><p><strong>CREDIT:</strong> Dave Lynch</p></div>
-      </div>
-      <div class="card-body">
-        <h3>Climate Change</h3>
-        <p>How our members are documenting environmental change through landscape photography.</p>
-        <span class="cta">Find out more <span class="arrow">→</span></span>
-      </div>
-    </a>
-
+    <a class="explore-card" href="https://rps.org/groups/landscape/what-we-do/" target="_top"><div class="card-img"><img src="https://rps.org/media/1f4nz4jb/3841843-atul-kshirsagar-buttermere-sunset.jpg?mode=max&amp;width=760" alt="Buttermere Sunset" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Atul Kshirsagar</p></div></div><div class="card-body"><h3>What We Do</h3><p>An overview of our activities, circles, and how to get involved with the group.</p><span class="cta">Explore <span class="arrow">→</span></span></div></a>
+    <a class="explore-card" href="https://rps.org/groups/landscape/events/" target="_top"><div class="card-img"><img src="https://rps.org/media/dxomtlqw/2nd-place-misty-drove-road-by-ian-iles.jpg?mode=max&amp;width=760" alt="Misty Drove Road" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Ian Iles</p></div></div><div class="card-body"><h3>Events</h3><p>Workshops, field trips, conferences, and online talks throughout the year.</p><span class="cta">View events <span class="arrow">→</span></span></div></a>
+    <a class="explore-card" href="https://rps.org/groups/landscape/projects/" target="_top"><div class="card-img"><img src="https://rps.org/media/eembfi2i/4206323-colin-balfour-lrps-11-hebrides-durness-to-mallaig-eilean-glas-lighthouse.jpg?mode=max&amp;width=760" alt="Eilean Glas Lighthouse" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Colin Balfour LRPS</p></div></div><div class="card-body"><h3>Projects</h3><p>Collaborative and individual projects our members are working on.</p><span class="cta">See projects <span class="arrow">→</span></span></div></a>
+    <a class="explore-card" href="https://rps.org/groups/landscape/articles/" target="_top"><div class="card-img"><img src="https://rps.org/media/ozidy5ri/burnham-on-sea-1-edit-2-lindsay-southgate.jpg?mode=max&amp;width=760" alt="Burnham-on-Sea" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Lindsay Southgate</p></div></div><div class="card-body"><h3>Articles</h3><p>Members’ writing on technique, inspiration, locations, and the landscape craft.</p><span class="cta">Read articles <span class="arrow">→</span></span></div></a>
+    <a class="explore-card" href="https://rps.org/groups/landscape/competitions/" target="_top"><div class="card-img"><img src="https://rps.org/media/4xrnqoca/5107169-mike-lloyd-spittal-beach.jpg?mode=max&amp;width=760" alt="Spittal Beach" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Mike Lloyd ARPS</p></div></div><div class="card-body"><h3>Competitions</h3><p>Themed and open competitions — a great way to challenge yourself and share your work.</p><span class="cta">Enter now <span class="arrow">→</span></span></div></a>
+    <a class="explore-card" href="https://rps.org/groups/landscape/publications/" target="_top"><div class="card-img"><img src="https://rps.org/media/d5hdenrx/3767537-mark-cresswell-arps-purple-mist.jpg?mode=max&amp;width=760" alt="Purple Mist" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Mark Cresswell ARPS</p></div></div><div class="card-body"><h3>Publications</h3><p>Newsletters, the Landscape Group Magazine, and other group documents.</p><span class="cta">Browse publications <span class="arrow">→</span></span></div></a>
+    <a class="explore-card" href="https://rps.org/groups/landscape/rps-landscape-distinction/" target="_top"><div class="card-img"><img src="https://rps.org/media/5htfeair/3806634-thomas-andy-branson-autumn-is-here.jpg?mode=max&amp;width=760" alt="Autumn Is Here" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Thomas Andy Branson</p></div></div><div class="card-body"><h3>Landscape Distinctions</h3><p>Support and guidance for your LRPS, ARPS, or FRPS journey in landscape.</p><span class="cta">Learn more <span class="arrow">→</span></span></div></a>
+    <a class="explore-card" href="https://rps.org/groups/landscape/our-committee/" target="_top"><div class="card-img"><img src="https://rps.org/media/0hbdep5i/3813543-elizabeth-webb-gushing-water-sgwd-y-pannwr-waterfall.jpg?mode=max&amp;width=760" alt="Sgwd y Pannwr Waterfall" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Elizabeth Webb</p></div></div><div class="card-body"><h3>Our Committee</h3><p>Meet the volunteers who run the Landscape Group and keep things moving.</p><span class="cta">Meet the team <span class="arrow">→</span></span></div></a>
+    <a class="explore-card" href="https://rps.org/groups/landscape/climate-change/" target="_top"><div class="card-img"><img src="https://rps.org/media/grop4n4o/3781170-dave-lynch-three-in-a-row.jpg?mode=max&amp;width=760" alt="Three In A Row" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Dave Lynch</p></div></div><div class="card-body"><h3>Climate Change</h3><p>How our members are documenting environmental change through landscape photography.</p><span class="cta">Find out more <span class="arrow">→</span></span></div></a>
   </div>
 </div>
-
 <hr class="divider" />
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- SECTION 5 — OUR DEFINITION OF "LANDSCAPE"          -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div id="lg-definition" class="section">
   <p class="section-label reveal">OUR DEFINITION</p>
-  <h2 class="reveal reveal-delay-1">What We Mean by "Landscape"</h2>
-  <p class="desc reveal reveal-delay-2" style="font-style: italic;">We take a broad view — here's the Group's working definition:</p>
-
+  <h2 class="reveal reveal-delay-1">What We Mean by “Landscape”</h2>
+  <p class="desc reveal reveal-delay-2" style="font-style: italic;">We take a broad view — here’s the Group’s working definition:</p>
   <div class="def-grid stagger-children">
-    <div class="def-card">
-      <h3>The Subject</h3>
-      <p>The photographic portrayal of all elements of the land, sea and sky, whether natural or built, or influenced by human endeavour.</p>
-    </div>
-    <div class="def-card">
-      <h3>The Scope</h3>
-      <p>Mountains, hills, farmland, coasts, bodies of water, forests, populated areas, and industrial landscapes.</p>
-    </div>
-    <div class="def-card">
-      <h3>The Technique</h3>
-      <p>Traditional or other techniques including infrared, multiple exposures, ICM, abstraction, minimalism and post-processing.</p>
-    </div>
+    <div class="def-card"><h3>The Subject</h3><p>The photographic portrayal of all elements of the land, sea and sky, whether natural or built, or influenced by human endeavour.</p></div>
+    <div class="def-card"><h3>The Scope</h3><p>Mountains, hills, farmland, coasts, bodies of water, forests, populated areas, and industrial landscapes.</p></div>
+    <div class="def-card"><h3>The Technique</h3><p>Traditional or other techniques including infrared, multiple exposures, ICM, abstraction, minimalism and post-processing.</p></div>
   </div>
 </div>
-
 <hr class="divider" />
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- SECTION 6 — SOCIAL & COMMUNITY                      -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div id="lg-social" class="social">
   <p class="section-label reveal">CONNECT WITH US</p>
   <h2 class="reveal reveal-delay-1">Join the Conversation</h2>
   <p class="desc reveal reveal-delay-2">Follow us on social media and share your landscape images. Tag <strong style="color: rgba(255,255,255,0.85);">@rpslandscape</strong> on Instagram to be featured!</p>
-
   <div class="social-grid stagger-children">
-    <a class="social-card" href="https://www.instagram.com/rpslandscape/" target="_blank" rel="noopener">
-      <h3>📷 Instagram</h3>
-      <p>@rpslandscape</p>
-    </a>
-    <a class="social-card" href="https://www.facebook.com/groups/RPSLandscapeGroup" target="_blank" rel="noopener">
-      <h3>👥 Facebook</h3>
-      <p>Group</p>
-    </a>
-    <a class="social-card" href="https://x.com/RPSLandscapeExh" target="_blank" rel="noopener">
-      <h3>𝕏 X / Twitter</h3>
-      <p>@RPSLandscapeExh</p>
-    </a>
+    <a class="social-card" href="https://www.instagram.com/rpslandscape/" target="_blank" rel="noopener"><h3>📷 Instagram</h3><p>@rpslandscape</p></a>
+    <a class="social-card" href="https://www.facebook.com/groups/RPSLandscapeGroup" target="_blank" rel="noopener"><h3>👥 Facebook</h3><p>Group</p></a>
+    <a class="social-card" href="https://x.com/RPSLandscapeExh" target="_blank" rel="noopener"><h3>𝕏 X / Twitter</h3><p>@RPSLandscapeExh</p></a>
   </div>
-
-  <div class="reveal" style="max-width: 100%; margin: 0 auto;">
-    <iframe src="https://embedsocial.com/api/pro_hashtag/2001b620676ca27f1dc546db2485d1505acea956/" class="embedsocial-hashtag-iframe" title="RPS Landscape Instagram Feed" scrolling="no" style="width: 100%; height: 400px; border: 0; overflow: hidden;"></iframe>
-  </div>
+  <div class="reveal" style="max-width: 100%; margin: 0 auto;"><iframe src="https://embedsocial.com/api/pro_hashtag/2001b620676ca27f1dc546db2485d1505acea956/" title="RPS Landscape Instagram Feed" scrolling="no" style="width: 100%; height: 400px; border: 0; overflow: hidden;"></iframe></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- FOOTER CTA                                          -->
-<!-- ═══════════════════════════════════════════════════ -->
 <div class="footer-cta">
   <h2 class="reveal">Start Your Landscape Journey</h2>
-  <p class="reveal reveal-delay-1">Since 2016, we've welcomed photographers of all levels. Whether you're picking up a camera for the first time or preparing for a Distinction, you'll find your place here.</p>
-  <div class="reveal reveal-delay-2">
-    <a class="btn-gold" href="https://rps.org/membership/" target="_top">BECOME A MEMBER →</a>
-  </div>
+  <p class="reveal reveal-delay-1">Since 2016, we’ve welcomed photographers of all levels. Whether you’re picking up a camera for the first time or preparing for a Distinction, you’ll find your place here.</p>
+  <div class="reveal reveal-delay-2"><a class="btn-gold" href="https://rps.org/membership/" target="_top">BECOME A MEMBER →</a></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- JAVASCRIPT — iframe-aware animations & height relay -->
-<!-- ═══════════════════════════════════════════════════ -->
+<button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
 <script>
 (function() {
   'use strict';
+  var revealElements = document.querySelectorAll('.reveal, .stagger-children');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealElements.forEach(function(el) { observer.observe(el); });
 
-  var revealEls = document.querySelectorAll('.reveal, .stagger-children');
-  var isIframe = (window !== window.parent);
+  var quickNav = document.getElementById('quickNav');
+  var sections = document.querySelectorAll('[id^="lg-"]');
+  var navLinks = quickNav.querySelectorAll('a[href^="#"]');
+  window.addEventListener('scroll', function() {
+    quickNav.classList.toggle('scrolled', window.scrollY > 200);
+    var current = '';
+    sections.forEach(function(s) { if (window.scrollY >= s.offsetTop - 80) current = s.getAttribute('id'); });
+    navLinks.forEach(function(l) { l.classList.toggle('active', l.getAttribute('href') === '#' + current); });
+  }, { passive: true });
 
-  // ----------------------------------------------------------------
-  // MODE A — Standalone (not in iframe): use IntersectionObserver
-  // ----------------------------------------------------------------
-  if (!isIframe) {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    revealEls.forEach(function(el) { observer.observe(el); });
-    return; // standalone mode — nothing else needed
-  }
-
-  // ----------------------------------------------------------------
-  // MODE B — Inside iframe: parent scroll relay drives reveals
-  // ----------------------------------------------------------------
-
-  // Listen for scroll position from parent
-  window.addEventListener('message', function(e) {
-    if (!e.data || e.data.type !== 'rps-scroll') return;
-
-    var scrollY = -e.data.iframeTop;           // how far parent has scrolled past iframe top
-    var viewBottom = scrollY + e.data.viewportHeight; // bottom edge of visible area
-    var triggerOffset = 60;                      // reveal a bit before fully in view
-
-    revealEls.forEach(function(el) {
-      if (el.classList.contains('visible')) return; // already revealed
-      var elTop = el.getBoundingClientRect().top + scrollY; // position within iframe document
-      if (elTop < viewBottom - triggerOffset) {
-        el.classList.add('visible');
-      }
-    });
-  });
-
-  // Send height to parent for auto-sizing
-  function sendHeight() {
-    var h = document.documentElement.scrollHeight;
-    window.parent.postMessage({ type: 'rps-iframe-height', height: h }, '*');
-  }
-
-  window.addEventListener('load', function() {
-    sendHeight();
-    setTimeout(sendHeight, 500);
-    setTimeout(sendHeight, 1500);
-    setTimeout(sendHeight, 3000);
-  });
-  window.addEventListener('resize', sendHeight);
-
-  // Periodic height updates for dynamic content (Issuu, EmbedSocial)
-  var heightPoll = 0;
-  var heightInterval = setInterval(function() {
-    sendHeight();
-    if (++heightPoll > 20) clearInterval(heightInterval);
-  }, 1500);
-
-  // MutationObserver for DOM changes
-  new MutationObserver(sendHeight).observe(document.body, {
-    childList: true, subtree: true, attributes: true
-  });
-
+  var backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', function() { backToTop.classList.toggle('show', window.scrollY > 600); }, { passive: true });
+  backToTop.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 })();
 </script>
-
 </body>
 </html>
