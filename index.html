@@ -130,7 +130,7 @@
   }
   .feature-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Always 2 columns on desktop */
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.9rem;
     max-width: 720px;
     margin: 0 auto 2rem;
@@ -182,28 +182,6 @@
   }
   .btn-green:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(61,90,62,0.4); }
   .btn-green:hover::after { left: 100%; }
-
-  /* ══════════════════════════════════════════════ */
-  /* STICKY QUICK NAV                               */
-  /* ══════════════════════════════════════════════ */
-  .quick-nav {
-    background: var(--ink); padding: 0.8rem 1rem;
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 0.4rem;
-    position: sticky; top: 0; z-index: 100;
-    transition: box-shadow 0.3s ease;
-  }
-  .quick-nav.scrolled {
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  }
-  .quick-nav a {
-    color: rgba(255,255,255,0.45); font-size: 0.68rem; font-weight: 500;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    padding: 0.35rem 0.8rem; transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
-  }
-  .quick-nav a:hover, .quick-nav a.active {
-    color: var(--gold); border-bottom-color: var(--gold);
-  }
 
   /* ══════════════════════════════════════════════ */
   /* SECTIONS                                       */
@@ -258,7 +236,6 @@
   .comp-image:hover img {
     transform: scale(1.05); filter: brightness(1.1);
   }
-  /* Hover overlay */
   .comp-image .img-overlay {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1;
     background: rgba(44,74,90,0.0);
@@ -340,7 +317,6 @@
   .explore-card:hover .card-img img {
     transform: scale(1.08);
   }
-  /* Card image hover overlay */
   .explore-card .card-img .img-overlay {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(44,74,90,0.0); display: flex;
@@ -473,31 +449,11 @@
   }
 
   /* ══════════════════════════════════════════════ */
-  /* BACK TO TOP BUTTON                              */
-  /* ══════════════════════════════════════════════ */
-  .back-to-top {
-    position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
-    width: 44px; height: 44px; border: none; cursor: pointer;
-    background: var(--dark-teal); color: #fff;
-    font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
-    opacity: 0; transform: translateY(20px);
-    transition: all 0.4s ease; pointer-events: none;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-  }
-  .back-to-top.show {
-    opacity: 1; transform: translateY(0); pointer-events: auto;
-  }
-  .back-to-top:hover {
-    background: var(--forest); transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  }
-
-  /* ══════════════════════════════════════════════ */
   /* OVATION — FIXED HEIGHT FOR NESTED IFRAME       */
   /* ══════════════════════════════════════════════ */
   .ovation-embed {
     width: 100%; max-width: 1200px; margin: 0 auto 1.5rem;
-    height: 750px; /* Fixed height works in nested iframes */
+    height: 750px;
     border: 1px solid var(--cream-border);
     box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     transition: box-shadow 0.4s ease;
@@ -523,7 +479,6 @@
     .section { padding: 2rem 1.2rem; }
     .section h2 { font-size: 1.4rem; }
     .section .desc { margin-bottom: 1.2rem; }
-    .quick-nav a { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
     .feature-grid { grid-template-columns: 1fr; gap: 0.5rem; }
     .feature-card { padding: 1rem; min-height: auto; }
     .ovation-embed { height: 450px; }
@@ -537,9 +492,7 @@
     .social-grid { gap: 0.6rem; margin-bottom: 1.5rem; }
     .social-card { padding: 1rem 0.6rem; }
     .footer-cta { padding: 2.5rem 1.2rem; }
-    .divider::after { display: none; } /* Remove diamond on mobile */
-    /* Hide back-to-top on mobile in iframe context */
-    .back-to-top { display: none; }
+    .divider::after { display: none; }
   }
 
   @media (max-width: 420px) {
@@ -602,15 +555,6 @@
   </div>
 </div>
 
-<!-- QUICK NAV — becomes sticky on scroll -->
-<nav class="quick-nav" id="quickNav">
-  <a href="#lg-competition">Competition</a>
-  <a href="#lg-ovation">Ovation</a>
-  <a href="#lg-explore">Explore</a>
-  <a href="#lg-definition">Definition</a>
-  <a href="#lg-social">Social</a>
-</nav>
-
 <!-- ═══════════════════════════════════════════════════ -->
 <!-- SECTION 2 — THEMED COMPETITION                      -->
 <!-- ═══════════════════════════════════════════════════ -->
@@ -620,7 +564,6 @@
   <p class="desc reveal reveal-delay-2">There's a particular kind of magic when the light begins to fade. Colours soften, shadows lengthen, and the landscape slips into a quieter register — dusk and dawn, mist and moonlight, lamplit streets, and star-sprinkled skies.</p>
 
   <div class="comp-grid reveal reveal-delay-2">
-    <!-- Image — clickable, dynamically matches right column height -->
     <div class="comp-image">
       <a href="https://pollunit.com/polls/rps_landscape_group_low_light_theme" target="_blank" rel="noopener">
         <img src="https://rps.org/media/s3rhw3ll/low-light-jacky-lee.jpg?mode=max&amp;width=760" alt="Scarlet Wing Under Starlight by Jacky Lee" />
@@ -631,7 +574,6 @@
       </div>
     </div>
 
-    <!-- Details — drives the row height -->
     <div class="comp-details">
       <div class="comp-box">
         <h3>What We're Looking For</h3>
@@ -863,73 +805,78 @@
   </div>
 </div>
 
-<!-- BACK TO TOP -->
-<button class="back-to-top" id="backToTop" title="Back to top">↑</button>
-
 <!-- ═══════════════════════════════════════════════════ -->
-<!-- JAVASCRIPT — Scroll animations & interactions       -->
+<!-- JAVASCRIPT — iframe-aware animations & height relay -->
 <!-- ═══════════════════════════════════════════════════ -->
 <script>
-  // ---- Scroll Reveal (IntersectionObserver) ----
-  const revealElements = document.querySelectorAll('.reveal, .stagger-children');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+(function() {
+  'use strict';
+
+  var revealEls = document.querySelectorAll('.reveal, .stagger-children');
+  var isIframe = (window !== window.parent);
+
+  // ----------------------------------------------------------------
+  // MODE A — Standalone (not in iframe): use IntersectionObserver
+  // ----------------------------------------------------------------
+  if (!isIframe) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function(el) { observer.observe(el); });
+    return; // standalone mode — nothing else needed
+  }
+
+  // ----------------------------------------------------------------
+  // MODE B — Inside iframe: parent scroll relay drives reveals
+  // ----------------------------------------------------------------
+
+  // Listen for scroll position from parent
+  window.addEventListener('message', function(e) {
+    if (!e.data || e.data.type !== 'rps-scroll') return;
+
+    var scrollY = -e.data.iframeTop;           // how far parent has scrolled past iframe top
+    var viewBottom = scrollY + e.data.viewportHeight; // bottom edge of visible area
+    var triggerOffset = 60;                      // reveal a bit before fully in view
+
+    revealEls.forEach(function(el) {
+      if (el.classList.contains('visible')) return; // already revealed
+      var elTop = el.getBoundingClientRect().top + scrollY; // position within iframe document
+      if (elTop < viewBottom - triggerOffset) {
+        el.classList.add('visible');
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-  revealElements.forEach(el => observer.observe(el));
-
-  // ---- Sticky Nav shadow + active section ----
-  const quickNav = document.getElementById('quickNav');
-  const sections = document.querySelectorAll('[id^="lg-"]');
-  const navLinks = quickNav.querySelectorAll('a[href^="#"]');
-
-  window.addEventListener('scroll', () => {
-    // Shadow on scroll
-    quickNav.classList.toggle('scrolled', window.scrollY > 200);
-
-    // Active section highlighting
-    let current = '';
-    sections.forEach(section => {
-      const top = section.offsetTop - 80;
-      if (window.scrollY >= top) {
-        current = section.getAttribute('id');
-      }
-    });
-    navLinks.forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-    });
-  }, { passive: true });
-
-  // ---- Back to Top ----
-  const backToTop = document.getElementById('backToTop');
-  window.addEventListener('scroll', () => {
-    backToTop.classList.toggle('show', window.scrollY > 600);
-  }, { passive: true });
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // ---- Send height to parent iframe (for Umbraco embed) ----
+  // Send height to parent for auto-sizing
   function sendHeight() {
-    const height = document.documentElement.scrollHeight;
-    window.parent.postMessage({ type: 'rps-iframe-height', height: height }, '*');
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'rps-iframe-height', height: h }, '*');
   }
-  // Send on load
-  window.addEventListener('load', () => {
+
+  window.addEventListener('load', function() {
     sendHeight();
-    // Send again after images load and animations complete
     setTimeout(sendHeight, 500);
     setTimeout(sendHeight, 1500);
     setTimeout(sendHeight, 3000);
   });
-  // Send on resize
   window.addEventListener('resize', sendHeight);
-  // Send periodically to catch any dynamic content changes
-  setInterval(sendHeight, 2000);
+
+  // Periodic height updates for dynamic content (Issuu, EmbedSocial)
+  var heightPoll = 0;
+  var heightInterval = setInterval(function() {
+    sendHeight();
+    if (++heightPoll > 20) clearInterval(heightInterval);
+  }, 1500);
+
+  // MutationObserver for DOM changes
+  new MutationObserver(sendHeight).observe(document.body, {
+    childList: true, subtree: true, attributes: true
+  });
+
+})();
 </script>
 
 </body>
