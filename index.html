@@ -493,17 +493,20 @@
   }
 
   /* ══════════════════════════════════════════════ */
-  /* OVATION — IMPROVED EMBED                        */
+  /* OVATION — FIXED HEIGHT FOR NESTED IFRAME       */
   /* ══════════════════════════════════════════════ */
   .ovation-embed {
     width: 100%; max-width: 1200px; margin: 0 auto 1.5rem;
-    aspect-ratio: 1200/920; min-height: 70vh;
+    height: 750px; /* Fixed height works in nested iframes */
     border: 1px solid var(--cream-border);
     box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     transition: box-shadow 0.4s ease;
   }
   .ovation-embed:hover {
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+  .ovation-embed iframe {
+    width: 100%; height: 100%; border: none; display: block;
   }
 
   /* ══════════════════════════════════════════════ */
@@ -520,6 +523,7 @@
     .section h2 { font-size: 1.5rem; }
     .quick-nav a { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
     .feature-grid { grid-template-columns: 1fr; gap: 0.6rem; }
+    .ovation-embed { height: 500px; }
   }
 </style>
 </head>
@@ -615,7 +619,7 @@
   <p class="desc reveal reveal-delay-2"><em>Ovation</em> celebrates members' successes and progress on their Distinctions journey. Each edition is designed to inspire, encourage and showcase the breadth of landscape work being made across the Group.</p>
 
   <div class="ovation-embed reveal reveal-delay-2">
-    <iframe src="https://e.issuu.com/embed.html?u=royalphotographicsociety&amp;d=landscape_sig_ovation_1" title="Ovation Issue 1" loading="lazy" style="border: none; width: 100%; height: 100%; display: block;" allowfullscreen="true"></iframe>
+    <iframe src="https://e.issuu.com/embed.html?u=royalphotographicsociety&amp;d=landscape_sig_ovation_1" title="Ovation Issue 1" loading="lazy" allowfullscreen="true"></iframe>
   </div>
 </div>
 
