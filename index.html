@@ -129,12 +129,17 @@
     max-width: 620px; margin: 0 auto 2rem; line-height: 1.8;
   }
   .feature-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-    gap: 0.8rem; max-width: 820px; margin: 0 auto 2rem; text-align: left;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Always 2 columns on desktop */
+    gap: 0.9rem;
+    max-width: 720px;
+    margin: 0 auto 2rem;
+    text-align: left;
   }
   .feature-card {
     background: var(--white-faint); border: 1px solid rgba(255,255,255,0.08);
-    padding: 1.3rem; transition: all 0.35s ease; cursor: default;
+    padding: 1.4rem 1.3rem; transition: all 0.35s ease; cursor: default;
+    min-height: 120px; display: flex; flex-direction: column; justify-content: flex-start;
   }
   .feature-card:hover {
     background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.18);
@@ -514,7 +519,7 @@
     .section { padding: 2.5rem 1.2rem; }
     .section h2 { font-size: 1.5rem; }
     .quick-nav a { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
-    .feature-grid { gap: 0.6rem; }
+    .feature-grid { grid-template-columns: 1fr; gap: 0.6rem; }
   }
 </style>
 </head>
