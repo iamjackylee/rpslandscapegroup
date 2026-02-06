@@ -514,16 +514,57 @@
   /* ══════════════════════════════════════════════ */
   @media (max-width: 700px) {
     .comp-grid { grid-template-columns: 1fr; }
-    .comp-image { min-height: 280px; position: relative; }
+    .comp-image { min-height: 240px; position: relative; }
     .comp-image a { position: absolute; }
     .social-grid { grid-template-columns: 1fr; max-width: 280px; }
-    .welcome { padding: 2.5rem 1.2rem; }
-    .welcome h2 { font-size: 1.8rem; }
-    .section { padding: 2.5rem 1.2rem; }
-    .section h2 { font-size: 1.5rem; }
+    .welcome { padding: 2rem 1.2rem; }
+    .welcome h2 { font-size: 1.7rem; }
+    .welcome .intro { margin-bottom: 1.5rem; }
+    .section { padding: 2rem 1.2rem; }
+    .section h2 { font-size: 1.4rem; }
+    .section .desc { margin-bottom: 1.2rem; }
     .quick-nav a { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
-    .feature-grid { grid-template-columns: 1fr; gap: 0.6rem; }
-    .ovation-embed { height: 500px; }
+    .feature-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+    .feature-card { padding: 1rem; min-height: auto; }
+    .ovation-embed { height: 450px; }
+    .explore-grid { gap: 0.8rem; }
+    .explore-card .card-img { height: 160px; }
+    .explore-card .card-body { padding: 1rem; }
+    .explore-card .card-body p { margin-bottom: 0.4rem; }
+    .def-grid { gap: 0.5rem; }
+    .def-card { padding: 1rem; }
+    .social { padding: 2rem 1.2rem; }
+    .social-grid { gap: 0.6rem; margin-bottom: 1.5rem; }
+    .social-card { padding: 1rem 0.6rem; }
+    .footer-cta { padding: 2.5rem 1.2rem; }
+    .divider::after { display: none; } /* Remove diamond on mobile */
+    /* Hide back-to-top on mobile in iframe context */
+    .back-to-top { display: none; }
+  }
+
+  @media (max-width: 420px) {
+    .welcome { padding: 1.5rem 1rem; }
+    .welcome h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .welcome .intro { font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.2rem; }
+    .welcome .badge { font-size: 0.55rem; padding: 0.35rem 1rem; margin-bottom: 1.2rem; }
+    .section { padding: 1.5rem 1rem; }
+    .section h2 { font-size: 1.25rem; }
+    .section .desc { font-size: 0.9rem; }
+    .feature-card h3 { font-size: 0.85rem; }
+    .feature-card p { font-size: 0.75rem; }
+    .comp-image { min-height: 200px; }
+    .comp-box { padding: 1.2rem; }
+    .comp-box h3 { font-size: 0.9rem; }
+    .comp-box p { font-size: 0.8rem; }
+    .ovation-embed { height: 380px; }
+    .explore-card .card-img { height: 140px; }
+    .explore-card .card-body h3 { font-size: 1rem; }
+    .explore-card .card-body p { font-size: 0.78rem; }
+    .btn-gold { padding: 0.75rem 1.8rem; font-size: 0.72rem; }
+    .btn-green { padding: 0.6rem 1.2rem; font-size: 0.68rem; }
+    .footer-cta { padding: 2rem 1rem; }
+    .footer-cta h2 { font-size: 1.5rem; }
+    .footer-cta p { font-size: 0.85rem; }
   }
 </style>
 </head>
