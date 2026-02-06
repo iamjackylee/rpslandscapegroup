@@ -49,6 +49,7 @@
   .stagger-children.visible > * { opacity: 1; transform: translateY(0); }
 
   .welcome { background: linear-gradient(160deg, #2c4a5a 0%, #3d5a3e 50%, #1a1a1a 100%); padding: 4rem 2.5rem 3.5rem; text-align: center; position: relative; overflow: hidden; }
+  .welcome--compact { padding: 2rem 2.5rem 2.5rem; }
   .welcome::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 30% 50%, rgba(212,168,67,0.06) 0%, transparent 60%); animation: shimmer 12s ease-in-out infinite alternate; pointer-events: none; }
   @keyframes shimmer { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
   .welcome > * { position: relative; z-index: 1; }
@@ -161,7 +162,7 @@
   @media (max-width: 700px) {
     .comp-grid { grid-template-columns: 1fr; } .comp-image { min-height: 240px; position: relative; } .comp-image a { position: absolute; }
     .social-grid { grid-template-columns: 1fr; max-width: 280px; }
-    .welcome { padding: 2rem 1.2rem; } .welcome h2 { font-size: 1.7rem; } .welcome .intro { margin-bottom: 1.5rem; }
+    .welcome { padding: 2rem 1.2rem; } .welcome--compact { padding: 1.2rem 1.2rem 1.5rem; } .welcome h2 { font-size: 1.7rem; } .welcome .intro { margin-bottom: 1.5rem; }
     .section { padding: 2rem 1.2rem; } .section h2 { font-size: 1.4rem; } .section .desc { margin-bottom: 1.2rem; }
     .quick-nav a { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
     .feature-grid { grid-template-columns: 1fr; gap: 0.5rem; } .feature-card { padding: 1rem; min-height: auto; }
@@ -172,7 +173,7 @@
     .footer-cta { padding: 2.5rem 1.2rem; } .divider::after { display: none; }
   }
   @media (max-width: 420px) {
-    .welcome { padding: 1.5rem 1rem; } .welcome h2 { font-size: 1.5rem; margin-bottom: 0.5rem; } .welcome .intro { font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.2rem; }
+    .welcome { padding: 1.5rem 1rem; } .welcome--compact { padding: 1rem 1rem 1.2rem; } .welcome h2 { font-size: 1.5rem; margin-bottom: 0.5rem; } .welcome .intro { font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.2rem; }
     .welcome .badge { font-size: 0.55rem; padding: 0.35rem 1rem; margin-bottom: 1.2rem; }
     .section { padding: 1.5rem 1rem; } .section h2 { font-size: 1.25rem; } .section .desc { font-size: 0.9rem; }
     .feature-card h3 { font-size: 0.85rem; } .feature-card p { font-size: 0.75rem; }
@@ -187,17 +188,14 @@
 </head>
 <body>
 
-<div class="welcome">
-  <div class="badge reveal">Royal Photographic Society · Landscape Group</div>
-  <h2 class="reveal reveal-delay-1">Welcome to the Landscape Group</h2>
-  <p class="intro reveal reveal-delay-2">A friendly community dedicated to encouraging landscape photography and helping photographers develop their skills — from those just starting out to experienced practitioners.</p>
+<div class="welcome welcome--compact">
   <div class="feature-grid stagger-children">
     <div class="feature-card"><h3>🏔️ Broad Perspective</h3><p>From wild places to built environments — classic and contemporary approaches are equally celebrated.</p></div>
     <div class="feature-card"><h3>📸 Creative Techniques</h3><p>Long exposures, multiple exposures, intentional camera movement, abstraction, minimalism and more.</p></div>
-    <div class="feature-card"><h3>🤝 Community</h3><p>Professional workshops, member-led field trips, competitions, and Print, Critique, Processing &amp; Project circles.</p></div>
-    <div class="feature-card"><h3>📰 Stay Connected</h3><p>Regular eNewsletters, the Landscape Group Magazine (every eight months), and our new <em>Ovation</em> e-Zine.</p></div>
+    <div class="feature-card"><h3>🤝 Community</h3><p>Workshops, field trips, competitions, and Print, Critique, Processing &amp; Project circles.</p></div>
+    <div class="feature-card"><h3>📰 Stay Connected</h3><p>eNewsletters, the Landscape Group Magazine, and our new <em>Ovation</em> e-Zine.</p></div>
   </div>
-  <div class="reveal reveal-delay-3"><a class="btn-gold" href="https://rps.org/membership/" target="_top">JOIN THE GROUP →</a></div>
+  <div class="reveal"><a class="btn-gold" href="https://rps.org/membership/" target="_top">JOIN THE GROUP →</a></div>
 </div>
 
 <nav class="quick-nav" id="quickNav">
