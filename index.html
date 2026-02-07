@@ -90,7 +90,38 @@
   .quick-nav.visible { opacity: 1; pointer-events: auto; }
   .quick-nav a { color: rgba(255,255,255,0.4); font-size: 0.52rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.55rem 0.65rem; transition: all 0.3s ease; border-left: 2px solid transparent; border-bottom: none; white-space: nowrap; display: block; text-align: center; border-radius: 6px; }
   .quick-nav a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  .quick-nav .nav-reset { color: rgba(255,255,255,0.2); font-size: 0.9rem; margin-top: 0.3rem; padding: 0.3rem; border: none; }
+  .quick-nav .nav-reset:hover { color: var(--gold); background: rgba(212,168,67,0.08); }
   .quick-nav a.active { color: var(--gold); border-left-color: var(--gold); background: rgba(212,168,67,0.08); }
+
+
+  /* Welcome modal */
+  .welcome-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; padding: 1rem; }
+  .welcome-modal-overlay.active { opacity: 1; pointer-events: auto; }
+  .welcome-modal { background: #faf8f4; max-width: 520px; width: 100%; padding: 2.5rem 2.2rem; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .welcome-modal-overlay.active .welcome-modal { transform: translateY(0) scale(1); }
+  .welcome-modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--dark-teal), var(--gold), var(--forest)); }
+  .welcome-modal h2 { font-family: var(--serif); font-size: 1.6rem; color: var(--ink); margin-bottom: 0.3rem; line-height: 1.25; }
+  .welcome-modal .modal-sub { font-size: 0.88rem; color: var(--text); margin-bottom: 1.6rem; line-height: 1.6; }
+  .welcome-modal .modal-options { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.2rem; }
+  .welcome-modal .modal-opt { display: flex; align-items: center; gap: 0.9rem; padding: 0.95rem 1.1rem; background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; transition: all 0.3s ease; text-align: left; }
+  .welcome-modal .modal-opt:hover { border-color: var(--dark-teal); transform: translateX(4px); background: #fff; }
+  .welcome-modal .modal-opt .opt-icon { font-size: 1.4rem; flex-shrink: 0; width: 2.2rem; text-align: center; }
+  .welcome-modal .modal-opt .opt-text h3 { font-family: var(--serif); font-size: 0.95rem; color: var(--ink); margin-bottom: 0.1rem; }
+  .welcome-modal .modal-opt .opt-text p { font-size: 0.75rem; color: var(--text); line-height: 1.45; }
+  .welcome-modal .modal-skip { display: block; margin: 0 auto; background: none; border: none; color: var(--text); font-size: 0.75rem; cursor: pointer; padding: 0.5rem 1rem; opacity: 0.6; transition: opacity 0.3s ease; font-family: var(--sans); }
+  .welcome-modal .modal-skip:hover { opacity: 1; }
+  .welcome-modal .modal-reset-note { font-size: 0.62rem; color: rgba(0,0,0,0.25); text-align: center; margin-top: 0.6rem; }
+
+  @media (max-width: 700px) {
+    .welcome-modal { padding: 1.8rem 1.4rem; }
+    .welcome-modal h2 { font-size: 1.3rem; }
+    .welcome-modal .modal-sub { font-size: 0.82rem; margin-bottom: 1.2rem; }
+    .welcome-modal .modal-opt { padding: 0.8rem 0.9rem; gap: 0.7rem; }
+    .welcome-modal .modal-opt .opt-icon { font-size: 1.2rem; width: 1.8rem; }
+    .welcome-modal .modal-opt .opt-text h3 { font-size: 0.88rem; }
+    .welcome-modal .modal-opt .opt-text p { font-size: 0.72rem; }
+  }
 
   /* Font size toggle */
   .font-toggle { position: fixed; right: 1rem; top: 50%; transform: translateY(-50%); z-index: 100; background: rgba(26,26,26,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
@@ -228,6 +259,7 @@
     .font-toggle { position: fixed; right: 0.5rem; bottom: 4rem; top: auto; transform: none; flex-direction: row; border-radius: 16px; padding: 0.35rem; gap: 0.15rem; opacity: 0; }
     .font-toggle.visible { opacity: 1; }
     .font-toggle .ft-label { display: none; }
+    .quick-nav .nav-reset { margin-top: 0; }
     .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; } .feature-card { padding: 1rem; min-height: auto; }
     .ovation-embed { height: 450px; }
     .explore-grid { gap: 0.8rem; } .explore-card .card-img { height: 160px; } .explore-card .card-body { padding: 1rem; }
@@ -264,6 +296,33 @@
 </head>
 <body>
 
+<div class="welcome-modal-overlay" id="welcomeModal">
+  <div class="welcome-modal">
+    <h2>Welcome to the Landscape Group 🏔️</h2>
+    <p class="modal-sub">Help us tailor your experience — what brings you here today?</p>
+    <div class="modal-options">
+      <button class="modal-opt" data-intent="explore">
+        <span class="opt-icon">🔍</span>
+        <div class="opt-text"><h3>I’m new — show me around</h3><p>Learn what the Landscape Group does, our events, and how to join</p></div>
+      </button>
+      <button class="modal-opt" data-intent="competition">
+        <span class="opt-icon">🎯</span>
+        <div class="opt-text"><h3>Enter a competition</h3><p>See the current themed competition and submit your work</p></div>
+      </button>
+      <button class="modal-opt" data-intent="ovation">
+        <span class="opt-icon">📖</span>
+        <div class="opt-text"><h3>What’s new?</h3><p>Read Ovation, our latest e-Zine celebrating members’ work</p></div>
+      </button>
+      <button class="modal-opt" data-intent="social">
+        <span class="opt-icon">📷</span>
+        <div class="opt-text"><h3>Connect & share</h3><p>Find us on Instagram, Facebook, and X — share your landscape images</p></div>
+      </button>
+    </div>
+    <button class="modal-skip" id="modalSkip">Just let me browse freely →</button>
+    <p class="modal-reset-note">You can change this anytime via the ⚙ in the sidebar</p>
+  </div>
+</div>
+
 <div class="hero" id="hero">
   <div class="hero-bg">
     <img src="https://rps.org/media/svgme2hj/3892214-morag-forbes-lrps-brooklyn-bridge-mono.jpg?mode=max&width=1920" alt="Brooklyn Bridge by Morag Forbes LRPS" />
@@ -288,6 +347,7 @@
 
 <nav class="quick-nav" id="quickNav">
   <a href="#lg-competition">Competition</a><a href="#lg-ovation">Ovation</a><a href="#lg-explore">Explore</a><a href="#lg-definition">Definition</a><a href="#lg-social">Social</a>
+  <a href="#" class="nav-reset" id="navReset" title="Change your preference">⚙</a>
 </nav>
 
 <div class="font-toggle" id="fontToggle">
@@ -382,32 +442,102 @@
 (function() {
   'use strict';
 
-  // ---- Visit counting & section reorder ----
-  var visitCount = 1;
-  try {
-    visitCount = parseInt(localStorage.getItem('rps-lg-visits') || '0') + 1;
-    localStorage.setItem('rps-lg-visits', visitCount.toString());
-  } catch(e) {}
+  // ---- Section order map ----
+  var sectionOrders = {
+    explore:     ['content-public', 'content-members'],
+    competition: ['content-members', 'content-public'],
+    ovation:     ['content-members', 'content-public'],
+    social:      ['content-public', 'content-members'],
+    default:     ['content-public', 'content-members']
+  };
 
-  var membersBlock = document.getElementById('content-members');
-  var publicBlock = document.getElementById('content-public');
-  var welcomeEl = document.querySelector('.welcome');
+  // For "ovation" and "social", we also scroll to the target after reorder
+  var scrollTargets = {
+    explore: 'lg-explore',
+    competition: 'lg-competition',
+    ovation: 'lg-ovation',
+    social: 'lg-social'
+  };
 
-  if (membersBlock && publicBlock && welcomeEl) {
-    // First-time or infrequent visitors: show Explore before Competition
-    if (visitCount < 3) {
-      // Move public block (Explore + Definition) before members block (Competition + Ovation)
-      var parentEl = membersBlock.parentNode;
-      // Find the divider between the two blocks
-      var dividerBetween = membersBlock.nextElementSibling;
-      // Insert public block before members block
-      parentEl.insertBefore(publicBlock, membersBlock);
-      // Move the divider too
-      if (dividerBetween && dividerBetween.tagName === 'HR') {
-        parentEl.insertBefore(dividerBetween, membersBlock);
+  function reorderSections(intent) {
+    var order = sectionOrders[intent] || sectionOrders['default'];
+    var blocks = order.map(function(id) { return document.getElementById(id); }).filter(Boolean);
+    if (blocks.length < 2) return;
+    var parent = blocks[0].parentNode;
+    // Collect all movable children (content-groups and dividers between them)
+    var allChildren = Array.from(parent.children);
+    var firstGroupIdx = allChildren.indexOf(document.getElementById('content-members'));
+    var altGroupIdx = allChildren.indexOf(document.getElementById('content-public'));
+    var startIdx = Math.min(firstGroupIdx, altGroupIdx);
+    if (startIdx < 0) return;
+
+    // Simply place blocks in desired order with divider between
+    var refNode = allChildren[startIdx];
+    blocks.forEach(function(block, i) {
+      parent.insertBefore(block, refNode);
+      refNode = block.nextSibling;
+      // Ensure divider between groups
+      if (i < blocks.length - 1 && refNode && refNode.tagName === 'HR') {
+        parent.insertBefore(refNode, block.nextSibling);
+        refNode = refNode.nextSibling;
       }
+    });
+  }
+
+  function scrollToSection(intent) {
+    var targetId = scrollTargets[intent];
+    if (!targetId) return;
+    var el = document.getElementById(targetId);
+    if (el) {
+      setTimeout(function() {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 400);
     }
-    // Returning visitors (3+): keep default order (Competition first)
+  }
+
+  // ---- Welcome modal logic ----
+  var modal = document.getElementById('welcomeModal');
+  var savedIntent = null;
+  try { savedIntent = localStorage.getItem('rps-lg-intent'); } catch(e) {}
+
+  if (!savedIntent && modal) {
+    // Show modal on first visit
+    setTimeout(function() { modal.classList.add('active'); }, 600);
+
+    // Handle option clicks
+    var optBtns = modal.querySelectorAll('.modal-opt');
+    optBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var intent = this.getAttribute('data-intent');
+        try { localStorage.setItem('rps-lg-intent', intent); } catch(e) {}
+        modal.classList.remove('active');
+        reorderSections(intent);
+        scrollToSection(intent);
+      });
+    });
+
+    // Skip button
+    document.getElementById('modalSkip').addEventListener('click', function() {
+      try { localStorage.setItem('rps-lg-intent', 'default'); } catch(e) {}
+      modal.classList.remove('active');
+      reorderSections('default');
+    });
+  } else if (savedIntent) {
+    // Returning visit — apply saved preference silently
+    reorderSections(savedIntent);
+  }
+
+  // ---- Reset preference (gear icon) ----
+  var resetBtn = document.getElementById('navReset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      try { localStorage.removeItem('rps-lg-intent'); } catch(e2) {}
+      if (modal) {
+        modal.classList.add('active');
+        // Re-attach handlers since they persist
+      }
+    });
   }
 
   // ---- Scroll Reveal ----
