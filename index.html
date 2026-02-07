@@ -134,22 +134,9 @@
   .font-toggle .ft-m { font-size: 0.85rem; }
   .font-toggle .ft-l { font-size: 1.05rem; }
 
-  /* Font size scaling */
-  body.font-medium { font-size: 1.08em; }
-  body.font-medium .section h2 { font-size: 2.2rem; }
-  body.font-medium .section .desc { font-size: 1.08rem; }
-  body.font-medium .comp-box p, body.font-medium .def-card p, body.font-medium .explore-card .card-body p { font-size: 0.92rem; }
-  body.font-medium .feature-card p { font-size: 0.85rem; }
-  body.font-medium .feature-card h3 { font-size: 1rem; }
-
-  body.font-large { font-size: 1.18em; }
-  body.font-large .section h2 { font-size: 2.5rem; }
-  body.font-large .section .desc { font-size: 1.15rem; }
-  body.font-large .comp-box p, body.font-large .def-card p, body.font-large .explore-card .card-body p { font-size: 1rem; }
-  body.font-large .feature-card p { font-size: 0.92rem; }
-  body.font-large .feature-card h3 { font-size: 1.08rem; }
-  body.font-large .comp-box h3, body.font-large .def-card h3 { font-size: 1.1rem; }
-  body.font-large .explore-card .card-body h3 { font-size: 1.2rem; }
+  /* Font size scaling — scales ALL text proportionally via root em */
+  html.font-medium { font-size: 118%; }
+  html.font-large { font-size: 138%; }
 
   .section { padding: 3rem 2rem; }
   .section-label { font-family: var(--sans); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--dark-gold); margin-bottom: 0.6rem; }
@@ -570,9 +557,9 @@
   try { savedSize = localStorage.getItem('rps-lg-fontsize') || 'normal'; } catch(e) {}
 
   function applyFontSize(size) {
-    document.body.classList.remove('font-medium', 'font-large');
-    if (size === 'medium') document.body.classList.add('font-medium');
-    if (size === 'large') document.body.classList.add('font-large');
+    document.documentElement.classList.remove('font-medium', 'font-large');
+    if (size === 'medium') document.documentElement.classList.add('font-medium');
+    if (size === 'large') document.documentElement.classList.add('font-large');
     fontBtns.forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-size') === size); });
     try { localStorage.setItem('rps-lg-fontsize', size); } catch(e) {}
   }
