@@ -85,10 +85,40 @@
   .btn-green:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(61,90,62,0.4); }
   .btn-green:hover::after { left: 100%; }
 
-  .quick-nav { background: var(--ink); padding: 0.8rem 1rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 0.4rem; position: sticky; top: 0; z-index: 100; transition: box-shadow 0.3s ease; }
-  .quick-nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-  .quick-nav a { color: rgba(255,255,255,0.45); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.35rem 0.8rem; transition: all 0.3s ease; border-bottom: 2px solid transparent; }
-  .quick-nav a:hover, .quick-nav a.active { color: var(--gold); border-bottom-color: var(--gold); }
+  /* Desktop: floating left sidebar */
+  .quick-nav { position: fixed; left: 1rem; top: 50%; transform: translateY(-50%); z-index: 100; background: rgba(26,26,26,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 0.8rem 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.15rem; border-radius: 24px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease; }
+  .quick-nav.visible { opacity: 1; pointer-events: auto; }
+  .quick-nav a { color: rgba(255,255,255,0.4); font-size: 0.52rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.55rem 0.65rem; transition: all 0.3s ease; border-left: 2px solid transparent; border-bottom: none; white-space: nowrap; display: block; text-align: center; border-radius: 6px; }
+  .quick-nav a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  .quick-nav a.active { color: var(--gold); border-left-color: var(--gold); background: rgba(212,168,67,0.08); }
+
+  /* Font size toggle */
+  .font-toggle { position: fixed; right: 1rem; top: 50%; transform: translateY(-50%); z-index: 100; background: rgba(26,26,26,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+  .font-toggle.visible { opacity: 1; pointer-events: auto; }
+  .font-toggle button { background: none; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.5); cursor: pointer; padding: 0.4rem 0.55rem; font-family: var(--serif); border-radius: 6px; transition: all 0.3s ease; display: block; line-height: 1; }
+  .font-toggle button:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .font-toggle button.active { color: var(--gold); border-color: var(--gold); background: rgba(212,168,67,0.08); }
+  .font-toggle .ft-label { font-size: 0.45rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.15rem; font-family: var(--sans); }
+  .font-toggle .ft-s { font-size: 0.7rem; }
+  .font-toggle .ft-m { font-size: 0.85rem; }
+  .font-toggle .ft-l { font-size: 1.05rem; }
+
+  /* Font size scaling */
+  body.font-medium { font-size: 1.08em; }
+  body.font-medium .section h2 { font-size: 2.2rem; }
+  body.font-medium .section .desc { font-size: 1.08rem; }
+  body.font-medium .comp-box p, body.font-medium .def-card p, body.font-medium .explore-card .card-body p { font-size: 0.92rem; }
+  body.font-medium .feature-card p { font-size: 0.85rem; }
+  body.font-medium .feature-card h3 { font-size: 1rem; }
+
+  body.font-large { font-size: 1.18em; }
+  body.font-large .section h2 { font-size: 2.5rem; }
+  body.font-large .section .desc { font-size: 1.15rem; }
+  body.font-large .comp-box p, body.font-large .def-card p, body.font-large .explore-card .card-body p { font-size: 1rem; }
+  body.font-large .feature-card p { font-size: 0.92rem; }
+  body.font-large .feature-card h3 { font-size: 1.08rem; }
+  body.font-large .comp-box h3, body.font-large .def-card h3 { font-size: 1.1rem; }
+  body.font-large .explore-card .card-body h3 { font-size: 1.2rem; }
 
   .section { padding: 3rem 2rem; }
   .section-label { font-family: var(--sans); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--dark-gold); margin-bottom: 0.6rem; }
@@ -190,7 +220,14 @@
 
   .hero { height: 40vh; min-height: 250px; } .hero-content h1 { font-size: 2.2rem; } .hero-tagline { font-size: 0.95rem; } .welcome { padding: 2rem 1.2rem; } .welcome--compact { padding: 1.2rem 1.2rem 1.5rem; } .welcome h2 { font-size: 1.7rem; } .welcome .intro { margin-bottom: 1.5rem; }
     .section { padding: 2rem 1.2rem; } .section h2 { font-size: 1.4rem; } .section .desc { margin-bottom: 1.2rem; }
-    .quick-nav a { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
+    .quick-nav { position: sticky; top: 0; left: auto; transform: none; flex-direction: row; flex-wrap: wrap; justify-content: center; border-radius: 0; padding: 0.7rem 0.8rem; gap: 0.2rem 0.3rem; opacity: 1; pointer-events: auto; background: var(--ink); backdrop-filter: none; box-shadow: none; }
+    .quick-nav.visible { opacity: 1; }
+    .quick-nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .quick-nav a { font-size: 0.6rem; padding: 0.3rem 0.5rem; border-left: none; border-bottom: 2px solid transparent; border-radius: 0; }
+    .quick-nav a:hover, .quick-nav a.active { border-bottom-color: var(--gold); background: none; border-left-color: transparent; }
+    .font-toggle { position: fixed; right: 0.5rem; bottom: 4rem; top: auto; transform: none; flex-direction: row; border-radius: 16px; padding: 0.35rem; gap: 0.15rem; opacity: 0; }
+    .font-toggle.visible { opacity: 1; }
+    .font-toggle .ft-label { display: none; }
     .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; } .feature-card { padding: 1rem; min-height: auto; }
     .ovation-embed { height: 450px; }
     .explore-grid { gap: 0.8rem; } .explore-card .card-img { height: 160px; } .explore-card .card-body { padding: 1rem; }
@@ -253,6 +290,14 @@
   <a href="#lg-competition">Competition</a><a href="#lg-ovation">Ovation</a><a href="#lg-explore">Explore</a><a href="#lg-definition">Definition</a><a href="#lg-social">Social</a>
 </nav>
 
+<div class="font-toggle" id="fontToggle">
+  <span class="ft-label">Size</span>
+  <button class="ft-s active" data-size="normal" title="Standard text size">A</button>
+  <button class="ft-m" data-size="medium" title="Medium text size">A</button>
+  <button class="ft-l" data-size="large" title="Large text size">A</button>
+</div>
+
+<div id="content-members" class="content-group">
 <div id="lg-competition" class="section">
   <p class="section-label reveal">CURRENT COMPETITION</p>
   <h2 class="reveal reveal-delay-1">Themed Competition: Low Light</h2>
@@ -278,8 +323,10 @@
   <p class="desc reveal reveal-delay-2"><em>Ovation</em> celebrates members’ successes and progress on their Distinctions journey. Each edition is designed to inspire, encourage and showcase the breadth of landscape work being made across the Group.</p>
   <div class="ovation-embed reveal reveal-delay-2"><iframe src="https://e.issuu.com/embed.html?u=royalphotographicsociety&amp;d=landscape_sig_ovation_1" title="Ovation Issue 1" loading="lazy" allowfullscreen="true"></iframe></div>
 </div>
+</div>
 <hr class="divider" />
 
+<div id="content-public" class="content-group">
 <div id="lg-explore" class="section">
   <p class="section-label reveal">EXPLORE THE GROUP</p>
   <h2 class="reveal reveal-delay-1">Discover What We Offer</h2>
@@ -308,6 +355,7 @@
     <div class="def-card"><h3>The Technique</h3><p>Traditional or other techniques including infrared, multiple exposures, ICM, abstraction, minimalism and post-processing.</p></div>
   </div>
 </div>
+</div>
 <hr class="divider" />
 
 <div id="lg-social" class="social">
@@ -333,25 +381,82 @@
 <script>
 (function() {
   'use strict';
+
+  // ---- Visit counting & section reorder ----
+  var visitCount = 1;
+  try {
+    visitCount = parseInt(localStorage.getItem('rps-lg-visits') || '0') + 1;
+    localStorage.setItem('rps-lg-visits', visitCount.toString());
+  } catch(e) {}
+
+  var membersBlock = document.getElementById('content-members');
+  var publicBlock = document.getElementById('content-public');
+  var welcomeEl = document.querySelector('.welcome');
+
+  if (membersBlock && publicBlock && welcomeEl) {
+    // First-time or infrequent visitors: show Explore before Competition
+    if (visitCount < 3) {
+      // Move public block (Explore + Definition) before members block (Competition + Ovation)
+      var parentEl = membersBlock.parentNode;
+      // Find the divider between the two blocks
+      var dividerBetween = membersBlock.nextElementSibling;
+      // Insert public block before members block
+      parentEl.insertBefore(publicBlock, membersBlock);
+      // Move the divider too
+      if (dividerBetween && dividerBetween.tagName === 'HR') {
+        parentEl.insertBefore(dividerBetween, membersBlock);
+      }
+    }
+    // Returning visitors (3+): keep default order (Competition first)
+  }
+
+  // ---- Scroll Reveal ----
   var revealElements = document.querySelectorAll('.reveal, .stagger-children');
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   revealElements.forEach(function(el) { observer.observe(el); });
 
+  // ---- Sidebar nav visibility + active section ----
   var quickNav = document.getElementById('quickNav');
+  var fontToggle = document.getElementById('fontToggle');
   var sections = document.querySelectorAll('[id^="lg-"]');
   var navLinks = quickNav.querySelectorAll('a[href^="#"]');
+
   window.addEventListener('scroll', function() {
-    quickNav.classList.toggle('scrolled', window.scrollY > 200);
+    var show = window.scrollY > 400;
+    quickNav.classList.toggle('visible', show);
+    quickNav.classList.toggle('scrolled', show);
+    if (fontToggle) fontToggle.classList.toggle('visible', show);
+
     var current = '';
-    sections.forEach(function(s) { if (window.scrollY >= s.offsetTop - 80) current = s.getAttribute('id'); });
+    sections.forEach(function(s) { if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id'); });
     navLinks.forEach(function(l) { l.classList.toggle('active', l.getAttribute('href') === '#' + current); });
   }, { passive: true });
 
+  // ---- Font size toggle ----
+  var fontBtns = document.querySelectorAll('.font-toggle button');
+  var savedSize = 'normal';
+  try { savedSize = localStorage.getItem('rps-lg-fontsize') || 'normal'; } catch(e) {}
+
+  function applyFontSize(size) {
+    document.body.classList.remove('font-medium', 'font-large');
+    if (size === 'medium') document.body.classList.add('font-medium');
+    if (size === 'large') document.body.classList.add('font-large');
+    fontBtns.forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-size') === size); });
+    try { localStorage.setItem('rps-lg-fontsize', size); } catch(e) {}
+  }
+  applyFontSize(savedSize);
+
+  fontBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() { applyFontSize(this.getAttribute('data-size')); });
+  });
+
+  // ---- Back to Top ----
   var backToTop = document.getElementById('backToTop');
   window.addEventListener('scroll', function() { backToTop.classList.toggle('show', window.scrollY > 600); }, { passive: true });
   backToTop.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
 })();
 </script>
 </body>
