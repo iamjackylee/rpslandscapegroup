@@ -90,9 +90,11 @@
   .quick-nav.visible { opacity: 1; pointer-events: auto; }
   .quick-nav a { color: rgba(255,255,255,0.4); font-size: 0.52rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.55rem 0.65rem; transition: all 0.3s ease; border-left: 2px solid transparent; border-bottom: none; white-space: nowrap; display: block; text-align: center; border-radius: 6px; }
   .quick-nav a:hover { color: #fff; background: rgba(255,255,255,0.08); }
-  .quick-nav .nav-reset { color: rgba(255,255,255,0.2); font-size: 0.9rem; margin-top: 0.3rem; padding: 0.3rem; border: none; }
+  .quick-nav .nav-reset { color: rgba(255,255,255,0.2); font-size: 0.85rem; margin-top: 0.2rem; padding: 0.35rem; border: none; }
   .quick-nav .nav-reset:hover { color: var(--gold); background: rgba(212,168,67,0.08); }
   .quick-nav a.active { color: var(--gold); border-left-color: var(--gold); background: rgba(212,168,67,0.08); }
+  .quick-nav a[data-tooltip] { position: relative; }
+  .quick-nav a[data-tooltip]:hover::after { content: attr(data-tooltip); position: absolute; left: calc(100% + 0.6rem); top: 50%; transform: translateY(-50%); background: rgba(26,26,26,0.95); color: #fff; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.7rem; border-radius: 4px; white-space: nowrap; pointer-events: none; font-family: var(--sans); }
 
 
   /* Welcome modal */
@@ -116,9 +118,9 @@
 
   /* Desktop content margins to clear floating sidebars */
   @media (min-width: 701px) {
-    .section, .social, .footer-cta { padding-left: 7.5rem; padding-right: 4.5rem; }
-    .welcome { padding-left: 7.5rem; padding-right: 4.5rem; }
-    .divider { margin-left: 6.5rem; margin-right: 3.5rem; }
+    .section, .social, .footer-cta { padding-left: 4.5rem; padding-right: 4.5rem; }
+    .welcome { padding-left: 4.5rem; padding-right: 4.5rem; }
+    .divider { margin-left: 3.5rem; margin-right: 3.5rem; }
   }
 
   @media (max-width: 700px) {
@@ -231,9 +233,9 @@
 
   /* Desktop content margins to clear floating sidebars */
   @media (min-width: 701px) {
-    .section, .social, .footer-cta { padding-left: 7.5rem; padding-right: 4.5rem; }
-    .welcome { padding-left: 7.5rem; padding-right: 4.5rem; }
-    .divider { margin-left: 6.5rem; margin-right: 3.5rem; }
+    .section, .social, .footer-cta { padding-left: 4.5rem; padding-right: 4.5rem; }
+    .welcome { padding-left: 4.5rem; padding-right: 4.5rem; }
+    .divider { margin-left: 3.5rem; margin-right: 3.5rem; }
   }
 
   @media (max-width: 700px) {
@@ -257,8 +259,9 @@
     .quick-nav { position: sticky; top: 0; left: auto; transform: none; flex-direction: row; flex-wrap: wrap; justify-content: center; border-radius: 0; padding: 0.7rem 0.8rem; gap: 0.2rem 0.3rem; opacity: 1; pointer-events: auto; background: var(--ink); backdrop-filter: none; box-shadow: none; }
     .quick-nav.visible { opacity: 1; }
     .quick-nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-    .quick-nav a { font-size: 0.6rem; padding: 0.3rem 0.5rem; border-left: none; border-bottom: 2px solid transparent; border-radius: 0; }
+    .quick-nav a { font-size: 0.75rem; padding: 0.3rem 0.5rem; border-left: none; border-bottom: 2px solid transparent; border-radius: 0; line-height: normal; }
     .quick-nav a:hover, .quick-nav a.active { border-bottom-color: var(--gold); background: none; border-left-color: transparent; }
+    .quick-nav a[data-tooltip]:hover::after { display: none; }
     .font-toggle { position: fixed; right: 0.5rem; bottom: 4rem; top: auto; transform: none; flex-direction: row; border-radius: 16px; padding: 0.35rem; gap: 0.15rem; opacity: 0; }
     .font-toggle.visible { opacity: 1; }
     .font-toggle .ft-label { display: none; }
@@ -349,7 +352,11 @@
 </div>
 
 <nav class="quick-nav" id="quickNav">
-  <a href="#lg-competition">Competition</a><a href="#lg-ovation">Ovation</a><a href="#lg-explore">Explore</a><a href="#lg-definition">Definition</a><a href="#lg-social">Social</a>
+  <a href="#lg-competition" data-tooltip="Competition">🎯</a>
+  <a href="#lg-ovation" data-tooltip="Ovation">📖</a>
+  <a href="#lg-explore" data-tooltip="Explore">🔍</a>
+  <a href="#lg-definition" data-tooltip="Definition">📋</a>
+  <a href="#lg-social" data-tooltip="Social">📷</a>
   <a href="#" class="nav-reset" id="navReset" title="Change your preference">⚙</a>
 </nav>
 
