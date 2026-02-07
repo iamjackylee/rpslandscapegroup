@@ -487,9 +487,18 @@
   var savedIntent = null;
   try { savedIntent = localStorage.getItem('rps-lg-intent'); } catch(e) {}
 
-  if (!savedIntent && modal) {
-    // Show modal on first visit
+  // Pre-apply saved preference so sections are ordered while modal is visible
+  if (savedIntent) reorderSections(savedIntent);
+
+  // Always show modal on every page load
+  if (modal) {
     setTimeout(function() { modal.classList.add('active'); }, 600);
+
+    // Highlight previously chosen option
+    if (savedIntent && savedIntent !== 'default') {
+      var prevBtn = modal.querySelector('[data-intent="' + savedIntent + '"]');
+      if (prevBtn) prevBtn.style.borderColor = 'var(--dark-teal)';
+    }
 
     // Handle option clicks
     var optBtns = modal.querySelectorAll('.modal-opt');
@@ -505,13 +514,9 @@
 
     // Skip button
     document.getElementById('modalSkip').addEventListener('click', function() {
-      try { localStorage.setItem('rps-lg-intent', 'default'); } catch(e) {}
       modal.classList.remove('active');
-      reorderSections('default');
+      // Keep existing preference if they just skip
     });
-  } else if (savedIntent) {
-    // Returning visit — apply saved preference silently
-    reorderSections(savedIntent);
   }
 
   // ---- Reset preference (gear icon) ----
