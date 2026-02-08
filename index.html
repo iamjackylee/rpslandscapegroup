@@ -629,9 +629,28 @@
     quickNav.classList.toggle('scrolled', show);
     if (fontToggle) fontToggle.classList.toggle('visible', show);
 
-    var current = '';
-    sections.forEach(function(s) { if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id'); });
-    navLinks.forEach(function(l) { l.classList.toggle('active', l.getAttribute('href') === '#' + current); });
+    // Find the section most visible in viewport
+    var viewMid = window.scrollY + window.innerHeight * 0.35;
+    var closest = '';
+    var closestDist = Infinity;
+    sections.forEach(function(s) {
+      var top = s.offsetTop;
+      var bottom = top + s.offsetHeight;
+      // Check if viewMid falls within this section
+      if (viewMid >= top && viewMid <= bottom) {
+        var dist = Math.abs(viewMid - (top + s.offsetHeight / 2));
+        if (dist < closestDist) { closestDist = dist; closest = s.getAttribute('id'); }
+      }
+    });
+    // Fallback: if no section contains viewMid, find nearest
+    if (!closest) {
+      sections.forEach(function(s) {
+        var mid = s.offsetTop + s.offsetHeight / 2;
+        var dist = Math.abs(viewMid - mid);
+        if (dist < closestDist) { closestDist = dist; closest = s.getAttribute('id'); }
+      });
+    }
+    navLinks.forEach(function(l) { l.classList.toggle('active', l.getAttribute('href') === '#' + closest); });
   }, { passive: true });
 
   // ---- Font size toggle ----
