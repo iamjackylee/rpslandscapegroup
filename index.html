@@ -98,9 +98,9 @@
 
 
   /* Welcome modal */
-  .welcome-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; padding: 1rem; }
+  .welcome-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; padding: 1rem; overflow-y: auto; }
   .welcome-modal-overlay.active { opacity: 1; pointer-events: auto; }
-  .welcome-modal { background: #faf8f4; max-width: 520px; width: 100%; padding: 2.5rem 2.2rem; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .welcome-modal { background: #faf8f4; max-width: 520px; width: 100%; padding: 2.5rem 2.2rem; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); max-height: 90vh; overflow-y: auto; margin: auto; }
   .welcome-modal-overlay.active .welcome-modal { transform: translateY(0) scale(1); }
   .welcome-modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--dark-teal), var(--gold), var(--forest)); }
   .welcome-modal h2 { font-family: var(--serif); font-size: 1.6rem; color: var(--ink); margin-bottom: 0.3rem; line-height: 1.25; }
@@ -132,6 +132,27 @@
     .welcome-modal .modal-opt .opt-text h3 { font-size: 0.88rem; }
     .welcome-modal .modal-opt .opt-text p { font-size: 0.72rem; }
   }
+
+
+
+  /* Modal uses fixed sizing regardless of font preference */
+  .welcome-modal { font-size: 16px; }
+  .welcome-modal h2 { font-size: 1.6rem !important; }
+  .welcome-modal .modal-sub { font-size: 0.88rem !important; }
+  .welcome-modal .modal-opt .opt-text h3 { font-size: 0.95rem !important; }
+  .welcome-modal .modal-opt .opt-text p { font-size: 0.75rem !important; }
+  .welcome-modal .modal-opt .opt-icon { font-size: 1.4rem !important; }
+  .welcome-modal .modal-skip { font-size: 0.75rem !important; }
+  .welcome-modal .modal-reset-note { font-size: 0.62rem !important; }
+  .modal-font-size { margin-top: 0.4rem; margin-bottom: 1rem; text-align: center; }
+  .modal-font-label { font-size: 0.72rem; color: var(--text); display: block; margin-bottom: 0.5rem; }
+  .modal-font-btns { display: inline-flex; gap: 0.5rem; align-items: flex-end; }
+  .modal-ft-btn { background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; font-family: var(--serif); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
+  .modal-ft-btn:hover { border-color: var(--dark-teal); }
+  .modal-ft-btn.active { border-color: var(--dark-teal); background: #fff; }
+  .modal-ft-btn:nth-child(1) { width: 2.8rem; height: 2.8rem; font-size: 0.95rem; }
+  .modal-ft-btn:nth-child(2) { width: 3.4rem; height: 3.4rem; font-size: 1.3rem; }
+  .modal-ft-btn:nth-child(3) { width: 4rem; height: 4rem; font-size: 1.7rem; }
 
   /* Font size toggle */
   .font-toggle { position: fixed; right: 1rem; top: 50%; transform: translateY(-50%); z-index: 100; background: rgba(26,26,26,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
@@ -324,6 +345,14 @@
         <div class="opt-text"><h3>Connect & share</h3><p>Find us on Instagram, Facebook, and X — share your landscape images</p></div>
       </button>
     </div>
+    <div class="modal-font-size">
+      <span class="modal-font-label">Text size preference:</span>
+      <div class="modal-font-btns">
+        <button class="modal-ft-btn active" data-size="normal">A</button>
+        <button class="modal-ft-btn" data-size="medium">A</button>
+        <button class="modal-ft-btn" data-size="large">A</button>
+      </div>
+    </div>
     <button class="modal-skip" id="modalSkip">Just let me browse freely →</button>
     <p class="modal-reset-note">You can change this anytime via the ⚙ in the sidebar</p>
   </div>
@@ -494,6 +523,30 @@
     });
   }
 
+  // Nav order maps — match the section arrangement
+  var navOrders = {
+    explore:     ['lg-explore', 'lg-definition', 'lg-competition', 'lg-ovation', 'lg-social'],
+    competition: ['lg-competition', 'lg-ovation', 'lg-explore', 'lg-definition', 'lg-social'],
+    ovation:     ['lg-ovation', 'lg-competition', 'lg-explore', 'lg-definition', 'lg-social'],
+    social:      ['lg-social', 'lg-definition', 'lg-explore', 'lg-ovation', 'lg-competition'],
+    default:     ['lg-definition', 'lg-explore', 'lg-ovation', 'lg-competition', 'lg-social']
+  };
+
+  function reorderNav(intent) {
+    var nav = document.getElementById('quickNav');
+    if (!nav) return;
+    var order = navOrders[intent] || navOrders['default'];
+    var links = {};
+    nav.querySelectorAll('a[href^="#"]').forEach(function(a) {
+      links[a.getAttribute('href').substring(1)] = a;
+    });
+    // Get the reset button to insert before it
+    var resetBtn = document.getElementById('navReset');
+    order.forEach(function(id) {
+      if (links[id]) nav.insertBefore(links[id], resetBtn);
+    });
+  }
+
   function scrollToSection(intent) {
     var targetId = scrollTargets[intent];
     if (!targetId) return;
@@ -511,7 +564,7 @@
   try { savedIntent = localStorage.getItem('rps-lg-intent'); } catch(e) {}
 
   // Pre-apply saved preference so sections are ordered while modal is visible
-  if (savedIntent) reorderSections(savedIntent);
+  if (savedIntent) { reorderSections(savedIntent); reorderNav(savedIntent); }
 
   // Always show modal on every page load
   if (modal) {
@@ -531,6 +584,7 @@
         try { localStorage.setItem('rps-lg-intent', intent); } catch(e) {}
         modal.classList.remove('active');
         reorderSections(intent);
+        reorderNav(intent);
         scrollToSection(intent);
       });
     });
@@ -538,7 +592,8 @@
     // Skip button
     document.getElementById('modalSkip').addEventListener('click', function() {
       modal.classList.remove('active');
-      // Keep existing preference if they just skip
+      // Apply default order if no saved preference
+      if (!savedIntent) { reorderSections('default'); reorderNav('default'); }
     });
   }
 
@@ -594,7 +649,26 @@
   applyFontSize(savedSize);
 
   fontBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() { applyFontSize(this.getAttribute('data-size')); });
+    btn.addEventListener('click', function() { applyFontSize(this.getAttribute('data-size')); syncModalFontBtns(this.getAttribute('data-size')); });
+  });
+
+  // Modal font size buttons
+  var modalFontBtns = document.querySelectorAll('.modal-ft-btn');
+  function syncModalFontBtns(size) {
+    modalFontBtns.forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-size') === size); });
+  }
+  function syncSidebarFontBtns(size) {
+    fontBtns.forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-size') === size); });
+  }
+  // Sync modal buttons with saved size on load
+  syncModalFontBtns(savedSize);
+  modalFontBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var size = this.getAttribute('data-size');
+      applyFontSize(size);
+      syncModalFontBtns(size);
+      syncSidebarFontBtns(size);
+    });
   });
 
   // ---- Back to Top ----
