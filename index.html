@@ -103,7 +103,8 @@
   .welcome-modal { background: #faf8f4; max-width: 720px; width: 100%; padding: 1.5rem 1.8rem; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); max-height: calc(100vh - 2rem); overflow-y: auto; scrollbar-width: thin; }
   .welcome-modal-overlay.active .welcome-modal { transform: translateY(0) scale(1); }
   .welcome-modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--dark-teal), var(--gold), var(--forest)); }
-  .welcome-modal h2 { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); margin-bottom: 0.2rem; line-height: 1.25; }
+  .modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.2rem; }
+  .welcome-modal h2 { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); margin-bottom: 0; line-height: 1.25; }
   .welcome-modal .modal-sub { font-size: 0.88rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
   .welcome-modal .modal-options { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.6rem; }
   .welcome-modal .modal-opt { display: flex; flex-direction: row; align-items: center; gap: 0.7rem; padding: 0.55rem 0.9rem; background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; transition: all 0.3s ease; text-align: left; }
@@ -144,11 +145,10 @@
   .welcome-modal .modal-opt .opt-icon { font-size: 1.3rem !important; }
   .welcome-modal .modal-skip { font-size: 0.72rem !important; }
   .welcome-modal .modal-reset-note { font-size: 0.58rem !important; }
-  .welcome-modal .modal-font-label { font-size: 0.68rem !important; }
   .welcome-modal .modal-ft-btn { font-size: inherit !important; }
-  .modal-font-size { margin-top: 0.1rem; margin-bottom: 0.3rem; display: flex; align-items: center; justify-content: center; gap: 0.8rem; }
-  .modal-font-label { font-size: 0.72rem; color: var(--text); }
-  .modal-font-btns { display: inline-flex; gap: 0.5rem; align-items: flex-end; }
+  .modal-font-size { flex-shrink: 0; }
+
+  .modal-font-btns { display: flex; gap: 0.3rem; align-items: flex-end; }
   .modal-ft-btn { background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; font-family: var(--serif); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
   .modal-ft-btn:hover { border-color: var(--dark-teal); }
   .modal-ft-btn.active { border-color: var(--dark-teal); background: #fff; }
@@ -328,7 +328,16 @@
 
 <div class="welcome-modal-overlay" id="welcomeModal">
   <div class="welcome-modal">
-    <h2>Welcome to the Landscape Group 🏔️</h2>
+    <div class="modal-header">
+      <h2>Welcome to the Landscape Group 🏔️</h2>
+      <div class="modal-font-size">
+        <div class="modal-font-btns">
+          <button class="modal-ft-btn active" data-size="normal">A</button>
+          <button class="modal-ft-btn" data-size="medium">A</button>
+          <button class="modal-ft-btn" data-size="large">A</button>
+        </div>
+      </div>
+    </div>
     <p class="modal-sub">Help us tailor your experience — what brings you here today?</p>
     <div class="modal-options">
       <button class="modal-opt" data-intent="explore">
@@ -347,14 +356,6 @@
         <span class="opt-icon">📷</span>
         <div class="opt-text"><h3>Connect & share</h3><p>Find us on Instagram, Facebook, and X — share your landscape images</p></div>
       </button>
-    </div>
-    <div class="modal-font-size">
-      <span class="modal-font-label">Text size preference:</span>
-      <div class="modal-font-btns">
-        <button class="modal-ft-btn active" data-size="normal">A</button>
-        <button class="modal-ft-btn" data-size="medium">A</button>
-        <button class="modal-ft-btn" data-size="large">A</button>
-      </div>
     </div>
     <button class="modal-skip" id="modalSkip">Just let me browse freely →</button>
     <p class="modal-reset-note">You can change this anytime via the ⚙ in the sidebar</p>
