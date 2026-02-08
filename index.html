@@ -105,12 +105,12 @@
   .welcome-modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--dark-teal), var(--gold), var(--forest)); }
   .welcome-modal h2 { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); margin-bottom: 0.2rem; line-height: 1.25; }
   .welcome-modal .modal-sub { font-size: 0.88rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
-  .welcome-modal .modal-options { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.8rem; }
-  .welcome-modal .modal-opt { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.9rem; background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; transition: all 0.3s ease; text-align: left; }
-  .welcome-modal .modal-opt:hover { border-color: var(--dark-teal); transform: translateX(4px); background: #fff; }
+  .welcome-modal .modal-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.8rem; }
+  .welcome-modal .modal-opt { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.8rem 0.6rem; background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; transition: all 0.3s ease; text-align: center; }
+  .welcome-modal .modal-opt:hover { border-color: var(--dark-teal); transform: scale(1.02); background: #fff; }
   .welcome-modal .modal-opt .opt-icon { font-size: 1.4rem; flex-shrink: 0; width: 2.2rem; text-align: center; }
-  .welcome-modal .modal-opt .opt-text h3 { font-family: var(--serif); font-size: 0.95rem; color: var(--ink); margin-bottom: 0.1rem; }
-  .welcome-modal .modal-opt .opt-text p { font-size: 0.75rem; color: var(--text); line-height: 1.45; }
+  .welcome-modal .modal-opt .opt-text h3 { font-family: var(--serif); font-size: 0.95rem; color: var(--ink); margin-bottom: 0.1rem; text-align: center; }
+  .welcome-modal .modal-opt .opt-text p { font-size: 0.75rem; color: var(--text); line-height: 1.45; text-align: center; }
   .welcome-modal .modal-skip { display: block; margin: 0 auto; background: none; border: none; color: var(--text); font-size: 0.75rem; cursor: pointer; padding: 0.5rem 1rem; opacity: 0.6; transition: opacity 0.3s ease; font-family: var(--sans); }
   .welcome-modal .modal-skip:hover { opacity: 1; }
   .welcome-modal .modal-reset-note { font-size: 0.58rem; color: rgba(0,0,0,0.25); text-align: center; margin-top: 0.3rem; }
@@ -124,12 +124,16 @@
   }
 
   @media (max-width: 700px) {
-    .welcome-modal { padding: 1.8rem 1.4rem; }
+    .welcome-modal { padding: 1.4rem 1.2rem; }
+    .welcome-modal .modal-options { grid-template-columns: 1fr 1fr; gap: 0.3rem; }
     .welcome-modal h2 { font-size: 1.3rem; }
     .welcome-modal .modal-sub { font-size: 0.82rem; margin-bottom: 1.2rem; }
     .welcome-modal .modal-opt { padding: 0.8rem 0.9rem; gap: 0.7rem; }
     .welcome-modal .modal-opt .opt-icon { font-size: 1.2rem; width: 1.8rem; }
     .welcome-modal .modal-opt .opt-text h3 { font-size: 0.88rem; }
+    .welcome-modal .modal-options { grid-template-columns: 1fr; }
+    .welcome-modal .modal-opt { flex-direction: row; text-align: left; gap: 0.5rem; }
+    .welcome-modal .modal-opt .opt-text h3, .welcome-modal .modal-opt .opt-text p { text-align: left; }
     .welcome-modal .modal-opt .opt-text p { font-size: 0.72rem; }
   }
 
