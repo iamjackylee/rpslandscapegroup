@@ -98,9 +98,9 @@
 
 
   /* Welcome modal */
-  .welcome-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; padding: 1rem; overflow-y: auto; }
+  .welcome-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; padding: 1.5rem; overflow: hidden; }
   .welcome-modal-overlay.active { opacity: 1; pointer-events: auto; }
-  .welcome-modal { background: #faf8f4; max-width: 520px; width: 100%; padding: 2.5rem 2.2rem; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); max-height: 90vh; overflow-y: auto; margin: auto; }
+  .welcome-modal { background: #faf8f4; max-width: 520px; width: 100%; padding: 2rem 2rem; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); max-height: calc(100vh - 3rem); overflow-y: auto; }
   .welcome-modal-overlay.active .welcome-modal { transform: translateY(0) scale(1); }
   .welcome-modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--dark-teal), var(--gold), var(--forest)); }
   .welcome-modal h2 { font-family: var(--serif); font-size: 1.6rem; color: var(--ink); margin-bottom: 0.3rem; line-height: 1.25; }
@@ -615,8 +615,9 @@
       e.preventDefault();
       try { localStorage.removeItem('rps-lg-intent'); } catch(e2) {}
       if (modal) {
+        var modalBox = modal.querySelector('.welcome-modal');
+        if (modalBox) modalBox.scrollTop = 0;
         modal.classList.add('active');
-        // Re-attach handlers since they persist
       }
     });
   }
