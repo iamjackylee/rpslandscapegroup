@@ -130,6 +130,8 @@
   .welcome-modal .modal-opt .opt-text h3 { font-family: var(--serif); font-size: 0.82rem !important; color: var(--ink); margin-bottom: 0; }
   .welcome-modal .modal-opt--browse { background: transparent; border-color: rgba(0,0,0,0.08); }
   .welcome-modal .modal-opt--browse:hover { background: var(--cream); border-color: var(--dark-teal); }
+  .welcome-modal .modal-opt.last-chosen { border-color: var(--dark-teal); background: #fff; position: relative; }
+  .welcome-modal .modal-opt.last-chosen::after { content: '✓'; position: absolute; right: 0.7rem; top: 50%; transform: translateY(-50%); color: var(--dark-teal); font-size: 0.85rem; font-weight: 700; }
   .modal-font-size { flex-shrink: 0; }
   .modal-font-btns { display: flex; gap: 0.25rem; align-items: flex-end; }
   .modal-ft-btn { background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; font-family: var(--serif); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
@@ -552,38 +554,74 @@
     if (el) setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 400);
   }
 
-  // ---- Visit counting ----
-  var visitCount = 1;
+  // ---- Per-user frequency tracking ----
+  var pickCounts = {};
+  var lastIntent = null;
   try {
-    visitCount = parseInt(localStorage.getItem('rps-lg-visits') || '0') + 1;
-    localStorage.setItem('rps-lg-visits', visitCount.toString());
-  } catch(e) {}
+    pickCounts = JSON.parse(localStorage.getItem('rps-lg-picks') || '{}');
+    lastIntent = localStorage.getItem('rps-lg-lastintent');
+  } catch(e) { pickCounts = {}; }
 
-  // ---- Smart modal option reordering ----
-  // Returning visitors: put competition first, browse second, new last
-  var modalOpts = document.getElementById('modalOptions');
-  if (modalOpts && visitCount >= 2) {
-    var opts = Array.from(modalOpts.querySelectorAll('.modal-opt'));
-    var intentOrder = ['competition', 'default', 'ovation', 'social', 'explore'];
-    intentOrder.forEach(function(intent) {
-      var btn = opts.find(function(o) { return o.getAttribute('data-intent') === intent; });
-      if (btn) modalOpts.appendChild(btn);
-    });
+  function savePick(intent) {
+    pickCounts[intent] = (pickCounts[intent] || 0) + 1;
+    lastIntent = intent;
+    try {
+      localStorage.setItem('rps-lg-picks', JSON.stringify(pickCounts));
+      localStorage.setItem('rps-lg-lastintent', intent);
+    } catch(e) {}
   }
 
-  // Pre-apply smart default (in case user dismisses quickly)
-  var autoIntent = visitCount < 3 ? 'explore' : 'competition';
+  // ---- Smart modal option reordering ----
+  var modalOpts = document.getElementById('modalOptions');
+  function reorderModalOptions() {
+    if (!modalOpts) return;
+    var opts = Array.from(modalOpts.querySelectorAll('.modal-opt'));
+    var hasHistory = Object.keys(pickCounts).length > 0;
+
+    if (!hasHistory) return; // First visit: keep default order
+
+    // Sort: last choice first, then by pick count desc, then original order
+    opts.sort(function(a, b) {
+      var ai = a.getAttribute('data-intent');
+      var bi = b.getAttribute('data-intent');
+      // Last choice always first
+      if (ai === lastIntent) return -1;
+      if (bi === lastIntent) return 1;
+      // Then by frequency
+      var ac = pickCounts[ai] || 0;
+      var bc = pickCounts[bi] || 0;
+      return bc - ac;
+    });
+
+    opts.forEach(function(btn) { modalOpts.appendChild(btn); });
+  }
+  reorderModalOptions();
+
+  // Pre-apply section order based on last intent (or explore for new visitors)
+  var autoIntent = lastIntent || 'explore';
   reorderSections(autoIntent);
   reorderNav(autoIntent);
 
   // ---- Modal show/hide ----
   var modal = document.getElementById('welcomeModal');
+
+  function highlightLastChoice() {
+    if (!modal) return;
+    modal.querySelectorAll('.modal-opt').forEach(function(b) { b.classList.remove('last-chosen'); });
+    if (lastIntent) {
+      var prev = modal.querySelector('[data-intent="' + lastIntent + '"]');
+      if (prev) prev.classList.add('last-chosen');
+    }
+  }
+
   if (modal) {
+    highlightLastChoice();
     setTimeout(function() { modal.classList.add('active'); }, 500);
 
     modal.querySelectorAll('.modal-opt').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var intent = this.getAttribute('data-intent');
+        savePick(intent);
         modal.classList.remove('active');
         reorderSections(intent);
         reorderNav(intent);
@@ -600,6 +638,8 @@
       if (modal) {
         var modalBox = modal.querySelector('.welcome-modal');
         if (modalBox) modalBox.scrollTop = 0;
+        reorderModalOptions();
+        highlightLastChoice();
         modal.classList.add('active');
       }
     });
