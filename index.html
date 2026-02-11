@@ -669,8 +669,17 @@
   });
 
   // ---- Flip card touch support ----
-  document.querySelectorAll('.feature-card').forEach(function(card) {
-    card.addEventListener('click', function() { this.classList.toggle('flipped'); });
+  var allCards = document.querySelectorAll('.feature-card');
+  allCards.forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var wasFlipped = this.classList.contains('flipped');
+      allCards.forEach(function(c) { c.classList.remove('flipped'); });
+      if (!wasFlipped) this.classList.add('flipped');
+    });
+  });
+  document.addEventListener('click', function() {
+    allCards.forEach(function(c) { c.classList.remove('flipped'); });
   });
 
   // ---- Back to Top ----
