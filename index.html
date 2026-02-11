@@ -156,6 +156,42 @@
   html.font-medium { font-size: 118%; }
   html.font-large { font-size: 138%; }
 
+
+  /* Mobile quick-links view (inside iframe) */
+  .mobile-view { display: none; }
+  @media (max-width: 768px) {
+    .mobile-view { display: block; }
+    .desktop-view { display: none !important; }
+    .welcome-modal-overlay { display: none !important; }
+    .quick-nav { display: none !important; }
+    .font-toggle { display: none !important; }
+    .back-to-top { display: none !important; }
+  }
+  .mv-hero { background: linear-gradient(160deg, #2c4a5a 0%, #3d5a3e 50%, #1a1a1a 100%); padding: 2rem 1.2rem; text-align: center; position: relative; overflow: hidden; }
+  .mv-hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 30% 50%, rgba(212,168,67,0.06) 0%, transparent 60%); pointer-events: none; }
+  .mv-hero > * { position: relative; z-index: 1; }
+  .mv-hero h1 { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+  .mv-hero p { font-size: 0.82rem; color: rgba(255,255,255,0.65); font-weight: 300; margin-bottom: 1.2rem; }
+  .mv-section { padding: 1.2rem; }
+  .mv-section-label { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: #b8860b; margin-bottom: 0.3rem; }
+  .mv-section h2 { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+  .mv-section p { font-size: 0.82rem; color: var(--text); line-height: 1.55; margin-bottom: 0.8rem; }
+  .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.8rem; }
+  .mv-card { display: block; padding: 0.9rem; background: var(--cream); text-decoration: none; border-left: 3px solid #b8860b; transition: transform 0.2s ease; }
+  .mv-card:active { transform: scale(0.98); }
+  .mv-card strong { font-family: var(--serif); color: var(--ink); font-size: 0.82rem; display: block; margin-bottom: 0.15rem; }
+  .mv-card span { font-size: 0.7rem; color: var(--text); }
+  .mv-divider { border: none; height: 1px; background: var(--cream-border); margin: 0; }
+  .mv-social { background: linear-gradient(160deg, #2c4a5a 0%, #3d5a3e 100%); padding: 1.2rem; text-align: center; }
+  .mv-social h2 { font-family: var(--serif); font-size: 1.15rem; color: #fff; margin-bottom: 0.6rem; }
+  .mv-social-row { display: flex; gap: 0.5rem; justify-content: center; }
+  .mv-social-btn { display: block; padding: 0.7rem 1rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); text-decoration: none; text-align: center; flex: 1; max-width: 140px; }
+  .mv-social-btn strong { color: #fff; font-family: var(--serif); font-size: 0.8rem; display: block; }
+  .mv-social-btn span { font-size: 0.65rem; color: rgba(255,255,255,0.5); }
+  .mv-footer { text-align: center; padding: 1.5rem 1rem; background: var(--ink); }
+  .mv-footer h2 { font-family: var(--serif); font-size: 1.15rem; color: #fff; margin-bottom: 0.4rem; }
+  .mv-footer p { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-bottom: 1rem; line-height: 1.5; }
+
   section.reorderable { display: contents; }
   .section { padding: 3rem 2rem; }
   .section-label { font-family: var(--sans); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--dark-gold); margin-bottom: 0.6rem; }
@@ -318,6 +354,8 @@
 </style>
 </head>
 <body>
+<!-- DESKTOP VIEW -->
+<div class="desktop-view">
 
 <div class="welcome-modal-overlay" id="welcomeModal">
   <div class="welcome-modal">
@@ -493,6 +531,66 @@
 </div>
 
 <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+</div>
+
+<!-- MOBILE VIEW -->
+<div class="mobile-view">
+  <div class="mv-hero">
+    <h1>RPS Landscape Group 🏔️</h1>
+    <p>Advancing the art of landscape photography</p>
+    <a class="btn-gold" href="https://rps.org/membership/" target="_top">JOIN THE GROUP →</a>
+  </div>
+
+  <div class="mv-section">
+    <p class="mv-section-label">CURRENT COMPETITION</p>
+    <h2>Low Light</h2>
+    <p>Silhouettes, reflections, and the calm drama that emerges when the world is lit only sparingly.</p>
+    <p><strong>Entries:</strong> 1 Jan – 28 Mar 2026 &nbsp;·&nbsp; <strong>Voting:</strong> 21–28 Mar</p>
+    <a class="btn-green" href="https://pollunit.com/polls/rps_landscape_group_low_light_theme" target="_blank">ENTER & VIEW →</a>
+  </div>
+  <hr class="mv-divider" />
+
+  <div class="mv-section">
+    <p class="mv-section-label">NEW PUBLICATION</p>
+    <h2>Ovation — e-Zine</h2>
+    <p>Celebrating members’ successes and Distinctions journey.</p>
+    <a class="btn-green" href="https://issuu.com/royalphotographicsociety/docs/landscape_sig_ovation_1" target="_blank">READ OVATION →</a>
+  </div>
+  <hr class="mv-divider" />
+
+  <div class="mv-section">
+    <p class="mv-section-label">THE LANDSCAPE GROUP</p>
+    <h2>What We Offer</h2>
+    <div class="mv-grid">
+      <a class="mv-card" href="https://rps.org/groups/landscape/what-we-do/" target="_top"><strong>What We Do</strong><span>Activities & circles</span></a>
+      <a class="mv-card" href="https://rps.org/groups/landscape/events/" target="_top"><strong>Events</strong><span>Workshops & talks</span></a>
+      <a class="mv-card" href="https://rps.org/groups/landscape/competitions/" target="_top"><strong>Competitions</strong><span>Themed & open</span></a>
+      <a class="mv-card" href="https://rps.org/groups/landscape/publications/" target="_top"><strong>Publications</strong><span>Newsletters & mags</span></a>
+      <a class="mv-card" href="https://rps.org/groups/landscape/projects/" target="_top"><strong>Projects</strong><span>Collaborative work</span></a>
+      <a class="mv-card" href="https://rps.org/groups/landscape/articles/" target="_top"><strong>Articles</strong><span>Technique & inspiration</span></a>
+      <a class="mv-card" href="https://rps.org/groups/landscape/rps-landscape-distinction/" target="_top"><strong>Distinctions</strong><span>LRPS, ARPS, FRPS</span></a>
+      <a class="mv-card" href="https://rps.org/groups/landscape/our-committee/" target="_top"><strong>Committee</strong><span>Meet the team</span></a>
+    </div>
+  </div>
+  <hr class="mv-divider" />
+
+  <div class="mv-social">
+    <p class="mv-section-label" style="color: #d4a843;">CONNECT WITH US</p>
+    <h2>Join the Conversation</h2>
+    <div class="mv-social-row">
+      <a class="mv-social-btn" href="https://www.instagram.com/rpslandscape/" target="_blank"><strong>📷 Instagram</strong><span>@rpslandscape</span></a>
+      <a class="mv-social-btn" href="https://www.facebook.com/groups/RPSLandscapeGroup" target="_blank"><strong>👥 Facebook</strong><span>Group</span></a>
+      <a class="mv-social-btn" href="https://x.com/RPSLandscapeExh" target="_blank"><strong>𝕏 X</strong><span>@RPSLandscapeExh</span></a>
+    </div>
+  </div>
+
+  <div class="mv-footer">
+    <h2>Start Your Journey</h2>
+    <p>Whether you’re new or preparing for a Distinction, you’ll find your place here.</p>
+    <a class="btn-gold" href="https://rps.org/membership/" target="_top">BECOME A MEMBER →</a>
+  </div>
+</div>
 
 <script>
 (function() {
