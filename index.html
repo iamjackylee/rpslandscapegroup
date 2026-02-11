@@ -48,7 +48,6 @@
   .stagger-children.visible > *:nth-child(9) { transition-delay: 0.61s; }
   .stagger-children.visible > * { opacity: 1; transform: translateY(0); }
 
-
   /* Hero banner */
   .hero { position: relative; height: 55vh; min-height: 350px; max-height: 600px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
   .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
@@ -71,10 +70,15 @@
   .welcome h2 { font-family: var(--serif); font-size: 2.6rem; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 0.8rem; }
   .welcome .intro { font-size: 0.95rem; font-weight: 300; color: var(--white-soft); max-width: 620px; margin: 0 auto 2rem; line-height: 1.8; }
   .feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; max-width: 1200px; margin: 0 auto 1.5rem; text-align: left; }
-  .feature-card { background: var(--white-faint); border: 1px solid rgba(255,255,255,0.08); padding: 1.4rem 1.3rem; transition: all 0.35s ease; cursor: default; min-height: 120px; display: flex; flex-direction: column; }
-  .feature-card:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.18); transform: translateY(-2px); }
-  .feature-card h3 { font-family: var(--serif); font-weight: 600; color: #fff; font-size: 0.92rem; margin-bottom: 0.35rem; }
-  .feature-card p { font-size: 0.78rem; font-weight: 300; color: var(--white-dim); line-height: 1.6; }
+  .feature-card { perspective: 600px; min-height: 120px; cursor: default; }
+  .feature-card-inner { position: relative; width: 100%; height: 100%; min-height: 120px; transition: transform 0.6s ease; transform-style: preserve-3d; }
+  .feature-card:hover .feature-card-inner, .feature-card.flipped .feature-card-inner { transform: rotateY(180deg); }
+  .feature-card-front, .feature-card-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.4rem 1.3rem; border: 1px solid rgba(255,255,255,0.08); }
+  .feature-card-front { background: var(--white-faint); text-align: center; }
+  .feature-card-front .card-emoji { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  .feature-card-front h3 { font-family: var(--serif); font-weight: 600; color: #fff; font-size: 0.92rem; }
+  .feature-card-back { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.18); transform: rotateY(180deg); text-align: center; }
+  .feature-card-back p { font-size: 0.78rem; font-weight: 300; color: var(--white-dim); line-height: 1.6; }
 
   .btn-gold { display: inline-block; font-family: var(--sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); background: var(--gold); padding: 0.95rem 2.4rem; position: relative; overflow: hidden; transition: all 0.35s ease; }
   .btn-gold::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transition: left 0.5s ease; }
@@ -90,32 +94,14 @@
   .quick-nav.visible { opacity: 1; pointer-events: auto; }
   .quick-nav a { color: rgba(255,255,255,0.4); font-size: 0.52rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.55rem 0.65rem; transition: all 0.3s ease; border-left: 2px solid transparent; border-bottom: none; white-space: nowrap; display: block; text-align: center; border-radius: 6px; }
   .quick-nav a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  .quick-nav a.active { color: var(--gold); border-left-color: var(--gold); background: rgba(212,168,67,0.08); }
   .quick-nav .nav-reset { color: rgba(255,255,255,0.2); font-size: 0.85rem; margin-top: 0.2rem; padding: 0.35rem; border: none; }
   .quick-nav .nav-reset:hover { color: var(--gold); background: rgba(212,168,67,0.08); }
-  .quick-nav a.active { color: var(--gold); border-left-color: var(--gold); background: rgba(212,168,67,0.08); }
   .quick-nav a[data-tooltip] { position: relative; }
   .quick-nav a[data-tooltip]:hover::after { content: attr(data-tooltip); position: absolute; left: calc(100% + 0.6rem); top: 50%; transform: translateY(-50%); background: rgba(26,26,26,0.95); color: #fff; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.7rem; border-radius: 4px; white-space: nowrap; pointer-events: none; font-family: var(--sans); }
 
-
   /* Welcome modal */
-  .welcome-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; padding: 1.5rem; overflow: hidden; }
-  .welcome-modal-overlay.active { opacity: 1; pointer-events: auto; }
-  .welcome-modal { background: #faf8f4; max-width: 720px; width: 100%; padding: 1.5rem 1.8rem; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); max-height: calc(100vh - 2rem); overflow-y: auto; scrollbar-width: thin; }
-  .welcome-modal-overlay.active .welcome-modal { transform: translateY(0) scale(1); }
   .welcome-modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--dark-teal), var(--gold), var(--forest)); }
-  .modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.2rem; }
-  .welcome-modal h2 { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); margin-bottom: 0; line-height: 1.25; }
-  .welcome-modal .modal-sub { font-size: 0.88rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
-  .welcome-modal .modal-options { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.6rem; }
-  .welcome-modal .modal-opt { display: flex; flex-direction: row; align-items: center; gap: 0.7rem; padding: 0.55rem 0.9rem; background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; transition: all 0.3s ease; text-align: left; }
-  .welcome-modal .modal-opt:hover { border-color: var(--dark-teal); transform: translateX(4px); background: #fff; }
-  .welcome-modal .modal-opt .opt-icon { font-size: 1.2rem; flex-shrink: 0; width: 1.8rem; text-align: center; }
-  .welcome-modal .modal-opt .opt-text h3 { font-family: var(--serif); font-size: 0.95rem; color: var(--ink); margin-bottom: 0; text-align: left; }
-  .welcome-modal .modal-opt .opt-text p { font-size: 0.75rem; color: var(--text); line-height: 1.35; text-align: left; }
-  .welcome-modal .modal-skip { display: block; margin: 0 auto; background: none; border: none; color: var(--text); font-size: 0.75rem; cursor: pointer; padding: 0.5rem 1rem; opacity: 0.6; transition: opacity 0.3s ease; font-family: var(--sans); }
-  .welcome-modal .modal-skip:hover { opacity: 1; }
-  .welcome-modal .modal-reset-note { font-size: 0.58rem; color: rgba(0,0,0,0.25); text-align: center; margin-top: 0.3rem; }
-
 
   /* Desktop content margins to clear floating sidebars */
   @media (min-width: 701px) {
@@ -125,36 +111,33 @@
   }
 
   @media (max-width: 700px) {
-    .welcome-modal { padding: 1.2rem 1rem; max-width: 95vw; }
-    .welcome-modal h2 { font-size: 1.3rem; }
-    .welcome-modal .modal-sub { font-size: 0.82rem; margin-bottom: 1.2rem; }
-    .welcome-modal .modal-opt { padding: 0.8rem 0.9rem; gap: 0.7rem; }
-    .welcome-modal .modal-opt .opt-icon { font-size: 1.2rem; width: 1.8rem; }
-    .welcome-modal .modal-opt .opt-text h3 { font-size: 0.88rem; }
-    .welcome-modal .modal-opt .opt-text p { font-size: 0.68rem; }
   }
 
 
-
-  /* Modal uses fixed px sizing regardless of font preference */
-  .welcome-modal { font-size: 15px; }
-  .welcome-modal h2 { font-size: 1.35rem !important; }
-  .welcome-modal .modal-sub { font-size: 0.82rem !important; }
-  .welcome-modal .modal-opt .opt-text h3 { font-size: 0.88rem !important; }
-  .welcome-modal .modal-opt .opt-text p { font-size: 0.7rem !important; }
-  .welcome-modal .modal-opt .opt-icon { font-size: 1.3rem !important; }
-  .welcome-modal .modal-skip { font-size: 0.72rem !important; }
-  .welcome-modal .modal-reset-note { font-size: 0.58rem !important; }
-  .welcome-modal .modal-ft-btn { font-size: inherit !important; }
+  /* Welcome modal */
+  .welcome-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; padding: 1.5rem; overflow: hidden; }
+  .welcome-modal-overlay.active { opacity: 1; pointer-events: auto; }
+  .welcome-modal { background: #faf8f4; max-width: 480px; width: 100%; padding: 1.3rem 1.6rem 1rem; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); max-height: calc(100vh - 2rem); overflow-y: auto; scrollbar-width: thin; font-size: 15px; }
+  .welcome-modal-overlay.active .welcome-modal { transform: translateY(0) scale(1); }
+  .welcome-modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--dark-teal), var(--gold), var(--forest)); }
+  .modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.15rem; }
+  .welcome-modal h2 { font-family: var(--serif); font-size: 1.25rem !important; color: var(--ink); margin-bottom: 0; line-height: 1.25; }
+  .welcome-modal .modal-sub { font-size: 0.78rem !important; color: var(--text); margin-bottom: 0.6rem; line-height: 1.4; }
+  .welcome-modal .modal-options { display: flex; flex-direction: column; gap: 0.25rem; }
+  .welcome-modal .modal-opt { display: flex; align-items: center; gap: 0.65rem; padding: 0.5rem 0.8rem; background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; transition: all 0.3s ease; text-align: left; }
+  .welcome-modal .modal-opt:hover { border-color: var(--dark-teal); transform: translateX(4px); background: #fff; }
+  .welcome-modal .modal-opt .opt-icon { font-size: 1.1rem !important; flex-shrink: 0; width: 1.6rem; text-align: center; }
+  .welcome-modal .modal-opt .opt-text h3 { font-family: var(--serif); font-size: 0.82rem !important; color: var(--ink); margin-bottom: 0; }
+  .welcome-modal .modal-opt--browse { background: transparent; border-color: rgba(0,0,0,0.08); }
+  .welcome-modal .modal-opt--browse:hover { background: var(--cream); border-color: var(--dark-teal); }
   .modal-font-size { flex-shrink: 0; }
-
-  .modal-font-btns { display: flex; gap: 0.3rem; align-items: flex-end; }
+  .modal-font-btns { display: flex; gap: 0.25rem; align-items: flex-end; }
   .modal-ft-btn { background: var(--cream); border: 2px solid var(--cream-border); cursor: pointer; font-family: var(--serif); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
   .modal-ft-btn:hover { border-color: var(--dark-teal); }
   .modal-ft-btn.active { border-color: var(--dark-teal); background: #fff; }
-  .modal-ft-btn:nth-child(1) { width: 2.2rem; height: 2.2rem; font-size: 0.85rem; }
-  .modal-ft-btn:nth-child(2) { width: 2.8rem; height: 2.8rem; font-size: 1.15rem; }
-  .modal-ft-btn:nth-child(3) { width: 3.4rem; height: 3.4rem; font-size: 1.5rem; }
+  .modal-ft-btn:nth-child(1) { width: 1.8rem; height: 1.8rem; font-size: 0.75rem; }
+  .modal-ft-btn:nth-child(2) { width: 2.2rem; height: 2.2rem; font-size: 1rem; }
+  .modal-ft-btn:nth-child(3) { width: 2.6rem; height: 2.6rem; font-size: 1.3rem; }
 
   /* Font size toggle */
   .font-toggle { position: fixed; right: 1rem; top: 50%; transform: translateY(-50%); z-index: 100; background: rgba(26,26,26,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
@@ -250,10 +233,19 @@
   .back-to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .back-to-top:hover { background: var(--forest); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
 
-  .ovation-embed { width: 100%; max-width: 1200px; margin: 0 auto 1.5rem; height: 750px; border: 1px solid var(--cream-border); box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: box-shadow 0.4s ease; }
-  .ovation-embed:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
-  .ovation-embed iframe { width: 100%; height: 100%; border: none; display: block; }
-
+  .ovation-preview { display: block; max-width: 800px; margin: 0 auto 1.5rem; overflow: hidden; border: 1px solid var(--cream-border); box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: all 0.4s ease; }
+  .ovation-preview:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.12); transform: translateY(-3px); }
+  .ovation-preview-img { position: relative; height: 340px; overflow: hidden; }
+  .ovation-preview-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+  .ovation-preview:hover .ovation-preview-img img { transform: scale(1.05); }
+  .ovation-preview-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,26,26,0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; transition: background 0.4s ease; }
+  .ovation-preview:hover .ovation-preview-overlay { background: rgba(44,74,90,0.5); }
+  .ovation-play { font-size: 2.5rem; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+  .ovation-cta { font-family: var(--sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; padding: 0.6rem 1.4rem; border: 1px solid rgba(255,255,255,0.6); transition: all 0.3s ease; }
+  .ovation-preview:hover .ovation-cta { background: rgba(255,255,255,0.15); border-color: #fff; }
+  .ovation-preview-info { padding: 1.2rem 1.5rem; background: var(--cream); }
+  .ovation-preview-info h3 { font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; }
+  .ovation-preview-info p { font-size: 0.82rem; font-weight: 300; color: var(--text); line-height: 1.5; }
 
   /* Desktop content margins to clear floating sidebars */
   @media (min-width: 701px) {
@@ -289,9 +281,8 @@
     .font-toggle { position: fixed; right: 0.5rem; bottom: 4rem; top: auto; transform: none; flex-direction: row; border-radius: 16px; padding: 0.35rem; gap: 0.15rem; opacity: 0; }
     .font-toggle.visible { opacity: 1; }
     .font-toggle .ft-label { display: none; }
-    .quick-nav .nav-reset { margin-top: 0; }
-    .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; } .feature-card { padding: 1rem; min-height: auto; }
-    .ovation-embed { height: 450px; }
+    .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; } .feature-card { min-height: 100px; } .feature-card-inner { min-height: 100px; } .feature-card-front, .feature-card-back { padding: 1rem; }
+    .ovation-preview-img { height: 240px; }
     .explore-grid { gap: 0.8rem; } .explore-card .card-img { height: 160px; } .explore-card .card-body { padding: 1rem; }
     .def-grid { gap: 0.5rem; } .def-card { padding: 1rem; }
     .social { padding: 2rem 1.2rem; } .social-grid { gap: 0.6rem; margin-bottom: 1.5rem; } .social-card { padding: 1rem 0.6rem; }
@@ -314,9 +305,9 @@
   .hero { height: 35vh; min-height: 200px; } .hero-content h1 { font-size: 1.8rem; } .hero-tagline { font-size: 0.85rem; } .hero-content { padding: 1rem; } .welcome { padding: 1.5rem 1rem; } .welcome--compact { padding: 1rem 1rem 1.2rem; } .welcome h2 { font-size: 1.5rem; margin-bottom: 0.5rem; } .welcome .intro { font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.2rem; }
     .welcome .badge { font-size: 0.55rem; padding: 0.35rem 1rem; margin-bottom: 1.2rem; }
     .section { padding: 1.5rem 1rem; } .section h2 { font-size: 1.25rem; } .section .desc { font-size: 0.9rem; }
-    .feature-grid { grid-template-columns: 1fr; } .feature-card h3 { font-size: 0.85rem; } .feature-card p { font-size: 0.75rem; }
+    .feature-grid { grid-template-columns: 1fr; } .feature-card { min-height: 90px; } .feature-card-inner { min-height: 90px; } .feature-card-front h3 { font-size: 0.85rem; } .feature-card-back p { font-size: 0.75rem; }
     .comp-image { min-height: 200px; } .comp-box { padding: 1.2rem; } .comp-box h3 { font-size: 0.9rem; } .comp-box p { font-size: 0.8rem; }
-    .ovation-embed { height: 380px; }
+    .ovation-preview-img { height: 180px; }
     .explore-card .card-img { height: 140px; } .explore-card .card-body h3 { font-size: 1rem; } .explore-card .card-body p { font-size: 0.78rem; }
     .btn-gold { padding: 0.75rem 1.8rem; font-size: 0.72rem; } .btn-green { padding: 0.6rem 1.2rem; font-size: 0.68rem; }
     .footer-cta { padding: 2rem 1rem; } .footer-cta h2 { font-size: 1.5rem; } .footer-cta p { font-size: 0.85rem; }
@@ -338,27 +329,29 @@
         </div>
       </div>
     </div>
-    <p class="modal-sub">Help us tailor your experience — what brings you here today?</p>
-    <div class="modal-options">
+    <p class="modal-sub">What brings you here today?</p>
+    <div class="modal-options" id="modalOptions">
       <button class="modal-opt" data-intent="explore">
         <span class="opt-icon">🔍</span>
-        <div class="opt-text"><h3>I’m new — show me around</h3><p>Learn what the Landscape Group does, our events, and how to join</p></div>
+        <div class="opt-text"><h3>I’m new — show me around</h3></div>
       </button>
       <button class="modal-opt" data-intent="competition">
         <span class="opt-icon">🎯</span>
-        <div class="opt-text"><h3>Enter a competition</h3><p>See the current themed competition and submit your work</p></div>
+        <div class="opt-text"><h3>Enter a competition</h3></div>
       </button>
       <button class="modal-opt" data-intent="ovation">
         <span class="opt-icon">📖</span>
-        <div class="opt-text"><h3>What’s new?</h3><p>Read Ovation, our latest e-Zine celebrating members’ work</p></div>
+        <div class="opt-text"><h3>What's new?</h3></div>
       </button>
       <button class="modal-opt" data-intent="social">
         <span class="opt-icon">📷</span>
-        <div class="opt-text"><h3>Connect & share</h3><p>Find us on Instagram, Facebook, and X — share your landscape images</p></div>
+        <div class="opt-text"><h3>Connect & share</h3></div>
+      </button>
+      <button class="modal-opt modal-opt--browse" data-intent="default">
+        <span class="opt-icon">🌍</span>
+        <div class="opt-text"><h3>Just browse freely</h3></div>
       </button>
     </div>
-    <button class="modal-skip" id="modalSkip">Just let me browse freely →</button>
-    <p class="modal-reset-note">You can change this anytime via the ⚙ in the sidebar</p>
   </div>
 </div>
 
@@ -376,10 +369,10 @@
 
 <div class="welcome welcome--compact">
   <div class="feature-grid stagger-children">
-    <div class="feature-card"><h3>🏔️ Broad Perspective</h3><p>From wild places to built environments — classic and contemporary approaches are equally celebrated.</p></div>
-    <div class="feature-card"><h3>📸 Creative Techniques</h3><p>Long exposures, multiple exposures, intentional camera movement, abstraction, minimalism and more.</p></div>
-    <div class="feature-card"><h3>🤝 Community</h3><p>Workshops, field trips, competitions, and Print, Critique, Processing &amp; Project circles.</p></div>
-    <div class="feature-card"><h3>📰 Stay Connected</h3><p>eNewsletters, the Landscape Group Magazine, and our new <em>Ovation</em> e-Zine.</p></div>
+    <div class="feature-card"><div class="feature-card-inner"><div class="feature-card-front"><span class="card-emoji">🏔️</span><h3>Broad Perspective</h3></div><div class="feature-card-back"><p>From wild places to built environments — classic and contemporary approaches are equally celebrated.</p></div></div></div>
+    <div class="feature-card"><div class="feature-card-inner"><div class="feature-card-front"><span class="card-emoji">📸</span><h3>Creative Techniques</h3></div><div class="feature-card-back"><p>Long exposures, multiple exposures, intentional camera movement, abstraction, minimalism and more.</p></div></div></div>
+    <div class="feature-card"><div class="feature-card-inner"><div class="feature-card-front"><span class="card-emoji">🤝</span><h3>Community</h3></div><div class="feature-card-back"><p>Workshops, field trips, competitions, and Print, Critique, Processing &amp; Project circles.</p></div></div></div>
+    <div class="feature-card"><div class="feature-card-inner"><div class="feature-card-front"><span class="card-emoji">📰</span><h3>Stay Connected</h3></div><div class="feature-card-back"><p>eNewsletters, the Landscape Group Magazine, and our new <em>Ovation</em> e-Zine.</p></div></div></div>
   </div>
   <div class="reveal"><a class="btn-gold" href="https://rps.org/membership/" target="_top">JOIN THE GROUP →</a></div>
 </div>
@@ -426,15 +419,27 @@
   <p class="section-label reveal">NEW PUBLICATION</p>
   <h2 class="reveal reveal-delay-1">Ovation — Our New e-Zine</h2>
   <p class="desc reveal reveal-delay-2"><em>Ovation</em> celebrates members’ successes and progress on their Distinctions journey. Each edition is designed to inspire, encourage and showcase the breadth of landscape work being made across the Group.</p>
-  <div class="ovation-embed reveal reveal-delay-2"><iframe src="https://e.issuu.com/embed.html?u=royalphotographicsociety&amp;d=landscape_sig_ovation_1" title="Ovation Issue 1" loading="lazy" allowfullscreen="true"></iframe></div>
+  <a class="ovation-preview reveal reveal-delay-2" href="https://issuu.com/royalphotographicsociety/docs/landscape_sig_ovation_1" target="_blank" rel="noopener">
+    <div class="ovation-preview-img">
+      <img src="https://rps.org/media/d5hdenrx/3767537-mark-cresswell-arps-purple-mist.jpg?mode=max&amp;width=1200" alt="Ovation Issue 1 Preview" />
+      <div class="ovation-preview-overlay">
+        <span class="ovation-play">📖</span>
+        <span class="ovation-cta">READ OVATION →</span>
+      </div>
+    </div>
+    <div class="ovation-preview-info">
+      <h3>Issue 1 — Now Available</h3>
+      <p>Featuring landscape photography from across the Group. Click to read the full e-Zine on Issuu.</p>
+    </div>
+  </a>
 </div>
 </section>
 <hr class="divider" />
 
 <section class="reorderable" data-section="lg-explore">
 <div id="lg-explore" class="section">
-  <p class="section-label reveal">EXPLORE THE GROUP</p>
-  <h2 class="reveal reveal-delay-1">Discover What We Offer</h2>
+  <p class="section-label reveal">THE LANDSCAPE GROUP</p>
+  <h2 class="reveal reveal-delay-1">What We Offer</h2>
   <p class="desc reveal reveal-delay-2">From workshops and competitions to publications and community projects — there’s something for every landscape photographer.</p>
   <div class="explore-grid stagger-children">
     <a class="explore-card" href="https://rps.org/groups/landscape/what-we-do/" target="_top"><div class="card-img"><img src="https://rps.org/media/1f4nz4jb/3841843-atul-kshirsagar-buttermere-sunset.jpg?mode=max&amp;width=760" alt="Buttermere Sunset" /><div class="img-overlay"></div><div class="credit"><p><strong>CREDIT:</strong> Atul Kshirsagar</p></div></div><div class="card-body"><h3>What We Do</h3><p>An overview of our activities, circles, and how to get involved with the group.</p><span class="cta">Explore <span class="arrow">→</span></span></div></a>
@@ -492,7 +497,6 @@
   'use strict';
 
   // ---- Section order map ----
-  // Full section orders for each intent
   var fullOrders = {
     explore:     ['lg-explore', 'lg-definition', 'lg-competition', 'lg-ovation', 'lg-social'],
     competition: ['lg-competition', 'lg-ovation', 'lg-explore', 'lg-definition', 'lg-social'],
@@ -500,39 +504,24 @@
     social:      ['lg-social', 'lg-definition', 'lg-explore', 'lg-ovation', 'lg-competition'],
     default:     ['lg-definition', 'lg-explore', 'lg-ovation', 'lg-competition', 'lg-social']
   };
-
-  var scrollTargets = {
-    explore: 'lg-explore',
-    competition: 'lg-competition',
-    ovation: 'lg-ovation',
-    social: 'lg-social'
-  };
+  var navOrders = fullOrders;
 
   function reorderSections(intent) {
     var order = fullOrders[intent] || fullOrders['default'];
-    // Collect all reorderable sections and dividers
     var sectionEls = {};
     document.querySelectorAll('section.reorderable').forEach(function(el) {
       sectionEls[el.getAttribute('data-section')] = el;
     });
-    // Collect all dividers between sections
     var dividers = document.querySelectorAll('hr.divider');
-    // Find the parent — should be body or a direct container
     var firstSection = sectionEls[Object.keys(sectionEls)[0]];
     if (!firstSection) return;
     var parent = firstSection.parentNode;
-    // Find the footer-cta as the insertion reference point
     var footer = document.querySelector('.footer-cta');
-    
-    // Remove all reorderable sections and dividers from DOM
     Object.values(sectionEls).forEach(function(el) { el.remove(); });
     dividers.forEach(function(d) { d.remove(); });
-    
-    // Re-insert in desired order with dividers between
     order.forEach(function(id, i) {
       if (sectionEls[id]) {
         parent.insertBefore(sectionEls[id], footer);
-        // Add divider between sections (not after the last one)
         if (i < order.length - 1) {
           var hr = document.createElement('hr');
           hr.className = 'divider';
@@ -542,10 +531,6 @@
     });
   }
 
-  // Nav order maps — match the section arrangement
-  // Nav order matches section order
-  var navOrders = fullOrders;
-
   function reorderNav(intent) {
     var nav = document.getElementById('quickNav');
     if (!nav) return;
@@ -554,7 +539,6 @@
     nav.querySelectorAll('a[href^="#"]').forEach(function(a) {
       links[a.getAttribute('href').substring(1)] = a;
     });
-    // Get the reset button to insert before it
     var resetBtn = document.getElementById('navReset');
     order.forEach(function(id) {
       if (links[id]) nav.insertBefore(links[id], resetBtn);
@@ -562,61 +546,57 @@
   }
 
   function scrollToSection(intent) {
-    var targetId = scrollTargets[intent];
+    var targetId = { explore: 'lg-explore', competition: 'lg-competition', ovation: 'lg-ovation', social: 'lg-social' }[intent];
     if (!targetId) return;
     var el = document.getElementById(targetId);
-    if (el) {
-      setTimeout(function() {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 400);
-    }
+    if (el) setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 400);
   }
 
-  // ---- Welcome modal logic ----
+  // ---- Visit counting ----
+  var visitCount = 1;
+  try {
+    visitCount = parseInt(localStorage.getItem('rps-lg-visits') || '0') + 1;
+    localStorage.setItem('rps-lg-visits', visitCount.toString());
+  } catch(e) {}
+
+  // ---- Smart modal option reordering ----
+  // Returning visitors: put competition first, browse second, new last
+  var modalOpts = document.getElementById('modalOptions');
+  if (modalOpts && visitCount >= 2) {
+    var opts = Array.from(modalOpts.querySelectorAll('.modal-opt'));
+    var intentOrder = ['competition', 'default', 'ovation', 'social', 'explore'];
+    intentOrder.forEach(function(intent) {
+      var btn = opts.find(function(o) { return o.getAttribute('data-intent') === intent; });
+      if (btn) modalOpts.appendChild(btn);
+    });
+  }
+
+  // Pre-apply smart default (in case user dismisses quickly)
+  var autoIntent = visitCount < 3 ? 'explore' : 'competition';
+  reorderSections(autoIntent);
+  reorderNav(autoIntent);
+
+  // ---- Modal show/hide ----
   var modal = document.getElementById('welcomeModal');
-  var savedIntent = null;
-  try { savedIntent = localStorage.getItem('rps-lg-intent'); } catch(e) {}
-
-  // Pre-apply saved preference so sections are ordered while modal is visible
-  if (savedIntent) { reorderSections(savedIntent); reorderNav(savedIntent); }
-
-  // Always show modal on every page load
   if (modal) {
-    setTimeout(function() { modal.classList.add('active'); }, 600);
+    setTimeout(function() { modal.classList.add('active'); }, 500);
 
-    // Highlight previously chosen option
-    if (savedIntent && savedIntent !== 'default') {
-      var prevBtn = modal.querySelector('[data-intent="' + savedIntent + '"]');
-      if (prevBtn) prevBtn.style.borderColor = 'var(--dark-teal)';
-    }
-
-    // Handle option clicks
-    var optBtns = modal.querySelectorAll('.modal-opt');
-    optBtns.forEach(function(btn) {
+    modal.querySelectorAll('.modal-opt').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var intent = this.getAttribute('data-intent');
-        try { localStorage.setItem('rps-lg-intent', intent); } catch(e) {}
         modal.classList.remove('active');
         reorderSections(intent);
         reorderNav(intent);
-        scrollToSection(intent);
+        if (intent !== 'default') scrollToSection(intent);
       });
-    });
-
-    // Skip button
-    document.getElementById('modalSkip').addEventListener('click', function() {
-      modal.classList.remove('active');
-      // Apply default order if no saved preference
-      if (!savedIntent) { reorderSections('default'); reorderNav('default'); }
     });
   }
 
-  // ---- Reset preference (gear icon) ----
+  // ---- Gear icon reopens modal ----
   var resetBtn = document.getElementById('navReset');
   if (resetBtn) {
     resetBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      try { localStorage.removeItem('rps-lg-intent'); } catch(e2) {}
       if (modal) {
         var modalBox = modal.querySelector('.welcome-modal');
         if (modalBox) modalBox.scrollTop = 0;
@@ -644,20 +624,17 @@
     quickNav.classList.toggle('scrolled', show);
     if (fontToggle) fontToggle.classList.toggle('visible', show);
 
-    // Find the section most visible in viewport
     var viewMid = window.scrollY + window.innerHeight * 0.35;
     var closest = '';
     var closestDist = Infinity;
     sections.forEach(function(s) {
       var top = s.offsetTop;
       var bottom = top + s.offsetHeight;
-      // Check if viewMid falls within this section
       if (viewMid >= top && viewMid <= bottom) {
         var dist = Math.abs(viewMid - (top + s.offsetHeight / 2));
         if (dist < closestDist) { closestDist = dist; closest = s.getAttribute('id'); }
       }
     });
-    // Fallback: if no section contains viewMid, find nearest
     if (!closest) {
       sections.forEach(function(s) {
         var mid = s.offsetTop + s.offsetHeight / 2;
@@ -668,7 +645,7 @@
     navLinks.forEach(function(l) { l.classList.toggle('active', l.getAttribute('href') === '#' + closest); });
   }, { passive: true });
 
-  // ---- Font size toggle ----
+  // ---- Font size toggle (sidebar) ----
   var fontBtns = document.querySelectorAll('.font-toggle button');
   var savedSize = 'normal';
   try { savedSize = localStorage.getItem('rps-lg-fontsize') || 'normal'; } catch(e) {}
@@ -678,31 +655,22 @@
     if (size === 'medium') document.documentElement.classList.add('font-medium');
     if (size === 'large') document.documentElement.classList.add('font-large');
     fontBtns.forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-size') === size); });
+    // Sync modal buttons
+    document.querySelectorAll('.modal-ft-btn').forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-size') === size); });
     try { localStorage.setItem('rps-lg-fontsize', size); } catch(e) {}
   }
   applyFontSize(savedSize);
 
   fontBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() { applyFontSize(this.getAttribute('data-size')); syncModalFontBtns(this.getAttribute('data-size')); });
+    btn.addEventListener('click', function() { applyFontSize(this.getAttribute('data-size')); });
+  });
+  document.querySelectorAll('.modal-ft-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { applyFontSize(this.getAttribute('data-size')); });
   });
 
-  // Modal font size buttons
-  var modalFontBtns = document.querySelectorAll('.modal-ft-btn');
-  function syncModalFontBtns(size) {
-    modalFontBtns.forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-size') === size); });
-  }
-  function syncSidebarFontBtns(size) {
-    fontBtns.forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-size') === size); });
-  }
-  // Sync modal buttons with saved size on load
-  syncModalFontBtns(savedSize);
-  modalFontBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var size = this.getAttribute('data-size');
-      applyFontSize(size);
-      syncModalFontBtns(size);
-      syncSidebarFontBtns(size);
-    });
+  // ---- Flip card touch support ----
+  document.querySelectorAll('.feature-card').forEach(function(card) {
+    card.addEventListener('click', function() { this.classList.toggle('flipped'); });
   });
 
   // ---- Back to Top ----
